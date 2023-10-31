@@ -6,15 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import cat.iticbcn.demo.M13Project1AkaeApplication.Company;
 
-public class CompanyRepository {
+interface CompanysRepository extends JpaRepository<Company,String> {
 	
 	
 	
-	interface EmpresasRepository extends JpaRepository<Company,String>{
 		
 		Collection<Company> findByNom(String nom);
 		
 		
-	}
+		
+		
+	
 
 }
