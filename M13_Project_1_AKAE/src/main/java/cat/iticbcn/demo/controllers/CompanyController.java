@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cat.iticbcn.demo.Exception.CompanyNotFoundException;
+import cat.iticbcn.demo.Exception.CompanyNotFoundAdvice;
 import cat.iticbcn.demo.bean.Company;
 import cat.iticbcn.demo.repository.CompanyRepository;
 
@@ -40,9 +42,36 @@ public class CompanyController {
   // Single item
   
   @GetMapping("/companies/{id}")
-  Optional<Company> one(@PathVariable Long id) {
+  Company one(@PathVariable Long id) {
     
-    return repository.findById(id);
+	  return repository.findById(id)
+		      .orElseThrow(() -> new CompanyNotFoundException(id));
+  }
+  
+  @PutMapping("/companies/{id}")
+  Company replaceCompany(@RequestBody Company newCompany, @PathVariable Long id) {
+    
+    return repository.findById(id)
+      .map(company -> {
+        company.setName(newCompany.getName());
+        company.setEmployees(newCompany.getEmployees());
+        company.setSocialSecurityNumber(newCompany.getSocialSecurityNumber());
+        company.setOwner(newCompany.getOwner());
+        company.setAddress(newCompany.getAddress());
+        company.setPhoneNumber(newCompany.getPhoneNumber());
+        company.setEmail(newCompany.getEmail());
+        company.setType(newCompany.getType());
+        return repository.save(company);
+      })
+      .orElseGet(() -> {
+        newCompany.setId(id);
+        return repository.save(newCompany);
+      });
+  }
+
+  @DeleteMapping("/companies/{id}")
+  void deleteCompany(@PathVariable Long id) {
+    repository.deleteById(id);
   }
 
 }

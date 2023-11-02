@@ -23,6 +23,8 @@ public class LoadDatabase {
 	    return args -> {
 	      log.info("Preloading " + 
 	    repository.save(new Company("Empresa 1", 54,190,"pepe", "C/ Sanchez Avilo", 978277378,"empresa1@gmail.com", "financiera")));
+	      log.info("Preloading " + 
+	    repository.save(new Company("Empresa 2", 54,190,"pepe", "C/ Sanchez Avilo", 978277378,"empresa1@gmail.com", "financiera")));
 	      
 	    };
 	  }
