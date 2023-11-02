@@ -4,18 +4,10 @@ import java.util.Collection;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import cat.iticbcn.demo.M13Project1AkaeApplication.Company;
+import cat.iticbcn.demo.bean.Company;
 
-interface CompanysRepository extends JpaRepository<Company,String> {
-	
-	
-	
-		
-		Collection<Company> findByNom(String nom);
-		
-		
-		
-		
-	
+public interface CompanyRepository extends JpaRepository<Company, Long> {
+
+		//Collection<Company> findById(Long id);
 
 }
