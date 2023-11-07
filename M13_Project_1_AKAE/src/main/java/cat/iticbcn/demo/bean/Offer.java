@@ -5,11 +5,13 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
+@Entity
 public class Offer {
 	private @Id @GeneratedValue Long id;
 	private String title;
@@ -20,6 +22,8 @@ public class Offer {
 	private Company company;
 
 	
+	public Offer() {}
+	
 	public Offer(Long id, String title, String description, Company company) {
 		super();
 		this.id = id;
@@ -27,6 +31,8 @@ public class Offer {
 		this.description = description;
 		this.company = company;
 	}
+	
+	
 
 	public Long getId() {
 		return id;
