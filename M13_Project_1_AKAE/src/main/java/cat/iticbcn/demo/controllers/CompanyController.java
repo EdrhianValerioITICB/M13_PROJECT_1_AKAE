@@ -11,20 +11,30 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import cat.iticbcn.demo.bean.Company;
+
+import cat.iticbcn.demo.Exception.*;
+
 import cat.iticbcn.demo.Exception.CompanyNotFoundException;
 import cat.iticbcn.demo.Exception.CompanyNotFoundAdvice;
-import cat.iticbcn.demo.bean.Company;
+
 import cat.iticbcn.demo.repository.CompanyRepository;
+import cat.iticbcn.demo.repository.OfferRepository;
+
 
 @RestController
 public class CompanyController {
 
   private final CompanyRepository repository;
-
   
+
+
+
   public CompanyController(CompanyRepository repository) {
 	this.repository = repository;
 }
+  
 
   // Aggregate root
   // tag::get-aggregate-root[]
@@ -38,6 +48,7 @@ public class CompanyController {
   Company newCompany(@RequestBody Company newCompany) {
     return repository.save(newCompany);
   }
+ 
 
   // Single item
   
@@ -73,5 +84,10 @@ public class CompanyController {
   void deleteCompany(@PathVariable Long id) {
     repository.deleteById(id);
   }
+  
+  
+  
+  
+  
 
 }
