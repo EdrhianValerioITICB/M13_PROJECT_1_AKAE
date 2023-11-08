@@ -1,5 +1,7 @@
 package cat.iticbcn.demo.bean;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -18,6 +20,7 @@ public class Company {
 	private int phoneNumber;
 	private String email;
 	private String type;
+	private List<Offer> offers = new ArrayList<>();
 
 	public Company() {
 
@@ -106,6 +109,16 @@ public class Company {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	
+
+	public List<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
 	}
 
 	@Override
