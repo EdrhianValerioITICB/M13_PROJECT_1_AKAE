@@ -1,9 +1,12 @@
 package cat.iticbcn.demo.database;
 
 import cat.iticbcn.demo.repository.CompanyRepository;
+import cat.iticbcn.demo.repository.OfferRepository;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import cat.iticbcn.demo.bean.Company;
+import cat.iticbcn.demo.bean.Offer;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 
@@ -28,6 +31,4 @@ public class LoadDatabase {
 	      
 	    };
 	  }
-	
-
 }

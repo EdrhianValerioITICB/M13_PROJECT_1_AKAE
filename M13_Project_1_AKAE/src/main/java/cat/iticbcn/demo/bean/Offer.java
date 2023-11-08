@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -19,19 +20,17 @@ public class Offer {
 	
 	@ManyToOne(optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JsonIgnore
+	@JoinColumn(name="company_id")
 	private Company company;
-
 	
-	public Offer() {}
-	
-	public Offer(Long id, String title, String description, Company company) {
+	public Offer(String title, String description, Company company) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.company = company;
 	}
 	
+	public Offer() {}
 	
 
 	public Long getId() {
@@ -66,6 +65,8 @@ public class Offer {
 		this.company = company;
 	}
 
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
