@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Company {
@@ -20,14 +24,16 @@ public class Company {
 	private int phoneNumber;
 	private String email;
 	private String type;
-	private List<Offer> offers = new ArrayList<>();
+@JsonIgnore
+@OneToMany(mappedBy="company",cascade=CascadeType.ALL)
+	private List<Offer> offers;
 
 	public Company() {
 
 	}
 
 	public Company(String name, int employees, int socialSecurityNumber, String owner, String address, int phoneNumber,
-			String email, String type) {
+			String email, String type, List<Offer> offers) {
 		super();
 		this.name = name;
 		this.employees = employees;
@@ -37,6 +43,7 @@ public class Company {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.type = type;
+		this.offers=offers;
 	}
 
 	public Long getId() {
