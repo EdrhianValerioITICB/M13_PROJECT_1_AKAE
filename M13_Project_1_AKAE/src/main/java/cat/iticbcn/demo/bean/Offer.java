@@ -18,9 +18,9 @@ public class Offer {
 	private String title;
 	private String description;
 	
-	@ManyToOne(optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
-	@JoinColumn(name="company_id")
+	@JoinColumn(name="company_id",nullable=true)
 	private Company company;
 	
 	public Offer(String title, String description, Company company) {
@@ -65,11 +65,9 @@ public class Offer {
 		this.company = company;
 	}
 
-	
-	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(company, description, id, title);
 	}
 
 	@Override
@@ -81,7 +79,8 @@ public class Offer {
 		if (getClass() != obj.getClass())
 			return false;
 		Offer other = (Offer) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(company, other.company) && Objects.equals(description, other.description)
+				&& Objects.equals(id, other.id) && Objects.equals(title, other.title);
 	}
 
 	@Override
