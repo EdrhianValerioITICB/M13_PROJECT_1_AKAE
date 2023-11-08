@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -24,9 +25,8 @@ public class Company {
 	private int phoneNumber;
 	private String email;
 	private String type;
-	@JsonIgnore
-	@OneToMany(mappedBy = "company", cascade = 	CascadeType.ALL)
-	private List<Offer> offers;
+	@OneToMany(mappedBy = "company", cascade = 	CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Offer> offers = new ArrayList<>();
 
 	public Company() {
 
