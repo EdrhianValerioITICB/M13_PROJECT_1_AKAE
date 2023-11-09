@@ -18,20 +18,23 @@ import org.springframework.boot.CommandLineRunner;
 
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class LoadDatabase {
 	
-	 private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
-
-	 Company empresa1 = new Company("Empresa 1", 54,190,"pepe", "C/ Sanchez Avilo", 978277378,"empresa1@gmail.com", "financiera", new ArrayList<>());
-	  @Bean
-	  CommandLineRunner initDatabase(CompanyRepository repository) {
-	    return args -> {
-	      log.info("Preloading " + 
-	    repository.save(new Company("Empresa 1", 54,190,"pepe", "C/ Sanchez Avilo", 978277378,"empresa1@gmail.com", "financiera", new ArrayList<>())));
-	      log.info("Preloading " + 
-	    repository.save(new Company("Empresa 2", 54,190,"pepe", "C/ Sanchez Avilo", 978277378,"empresa1@gmail.com", "financiera", new ArrayList<>())));
-	    };
-	  }
+	/*
+	 * private static final Logger log =
+	 * LoggerFactory.getLogger(LoadDatabase.class);
+	 * 
+	 * Company empresa1 = new Company("Empresa 1", 54,190,"pepe",
+	 * "C/ Sanchez Avilo", 978277378,"empresa1@gmail.com", "financiera", new
+	 * ArrayList<>());
+	 * 
+	 * @Bean CommandLineRunner initDatabase(CompanyRepository repository) { return
+	 * args -> { log.info("Preloading " + repository.save(new Company("Empresa 1",
+	 * 54,190,"pepe", "C/ Sanchez Avilo", 978277378,"empresa1@gmail.com",
+	 * "financiera", new ArrayList<>()))); log.info("Preloading " +
+	 * repository.save(new Company("Empresa 2", 54,190,"pepe", "C/ Sanchez Avilo",
+	 * 978277378,"empresa1@gmail.com", "financiera", new ArrayList<>()))); }; }
+	 */
 	  	  
 }
