@@ -93,6 +93,14 @@ public class RestAppController {
 	}
 	// end::get-aggregate-root[]
 
+	@GetMapping(value="companies/{id}/offers")
+	public List<Offer> getOffer(@PathVariable("id") Long id){
+		Optional<Company> company = companyRepository.findById(id);
+		List<Offer> offers = (List<Offer>) company.get().getOffers();
+		return offers;
+	}
+		
+	
 	@PostMapping("/offers")
 	Offer newOffer(@RequestBody Offer newOffer) {
 		return offerRepository.save(newOffer);
