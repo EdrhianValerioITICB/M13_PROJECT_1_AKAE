@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -100,12 +101,6 @@ public class RestAppController {
 		return offers;
 	}
 		
-	
-	@PostMapping("/offers")
-	Offer newOffer(@RequestBody Offer newOffer) {
-		return offerRepository.save(newOffer);
-	}
-	
 	@PostMapping(value="companies/{id}/offers")
 	public ResponseEntity<Offer> createOfferCompany(@RequestBody Offer offer, @PathVariable("id") Long id){
 		Optional<Company> company = companyRepository.findById(id);
@@ -118,7 +113,6 @@ public class RestAppController {
 
 	@GetMapping("/offers/{id}")
 	Offer oneOffer(@PathVariable Long id) {
-
 		return offerRepository.findById(id).orElseThrow(() -> new OfferNotFoundException(id));
 	}
 
@@ -136,8 +130,14 @@ public class RestAppController {
 	}
 
 	@DeleteMapping("/offers/{id}")
+	@Transactional
 	void deleteOffer(@PathVariable Long id) {
-		offerRepository.deleteById(id);
+		Optional<Offer> optionalOffer = offerRepository.findById(id);
+		if(optionalOffer.isPresent()) {
+			offerRepository.delete(optionalOffer.get());
+		} else {
+			throw new OfferNotFoundException(id);
+		}
 	}
 	
 }

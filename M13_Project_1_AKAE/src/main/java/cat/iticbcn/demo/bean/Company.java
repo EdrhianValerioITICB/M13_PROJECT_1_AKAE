@@ -121,8 +121,6 @@ public class Company {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
 
 	public List<Offer> getOffers() {
 		return offers;
