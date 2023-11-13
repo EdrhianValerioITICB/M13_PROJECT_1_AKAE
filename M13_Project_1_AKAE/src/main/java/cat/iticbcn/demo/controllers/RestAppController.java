@@ -95,7 +95,7 @@ public class RestAppController {
 	// end::get-aggregate-root[]
 
 	@GetMapping(value="companies/{id}/offers")
-	public List<Offer> getOffer(@PathVariable("id") Long id){
+	List<Offer> getOffer(@PathVariable("id") Long id){
 		Optional<Company> company = companyRepository.findById(id);
 		List<Offer> offers = (List<Offer>) company.get().getOffers();
 		return offers;
@@ -129,15 +129,13 @@ public class RestAppController {
 		});
 	}
 
-	@DeleteMapping("/offers/{id}")
+	@DeleteMapping("companies/{idCo}/offers/{idOf}")
 	@Transactional
-	void deleteOffer(@PathVariable Long id) {
-		Optional<Offer> optionalOffer = offerRepository.findById(id);
-		if(optionalOffer.isPresent()) {
-			offerRepository.delete(optionalOffer.get());
-		} else {
-			throw new OfferNotFoundException(id);
-		}
+	void deleteOffer(@PathVariable Long idCo, @PathVariable Long idOf) {
+		Optional<Company> company = companyRepository.findById(idCo);
+		Optional<Offer> offer = offerRepository.findById(idOf);
+		company.get().getOffers().remove(offer.get());
+		offerRepository.deleteById(idOf);
 	}
 	
 }
