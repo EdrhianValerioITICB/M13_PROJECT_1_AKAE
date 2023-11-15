@@ -137,5 +137,5 @@ public class RestAppController {
 		company.get().getOffers().remove(offer.get());
 		offerRepository.deleteById(idOf);
 		
-	}	
+	}
 }
