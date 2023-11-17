@@ -94,12 +94,20 @@ public class RestAppController {
 	}
 	// end::get-aggregate-root[]
 
+	// Single item
+
+		@GetMapping("/offers/{id}")
+		Offer oneOffer(@PathVariable Long id) {
+			return offerRepository.findById(id).orElseThrow(() -> new OfferNotFoundException(id));
+		}
+		
 	@GetMapping(value="companies/{id}/offers")
 	List<Offer> getOffer(@PathVariable("id") Long id){
 		Optional<Company> company = companyRepository.findById(id);
 		List<Offer> offers = (List<Offer>) company.get().getOffers();
 		return offers;
 	}
+	
 		
 	@PostMapping(value="companies/{id}/offers")
 	public ResponseEntity<Offer> createOfferCompany(@RequestBody Offer offer, @PathVariable("id") Long id){
@@ -112,13 +120,6 @@ public class RestAppController {
 			throw new CompanyNotFoundException(id);
 		}
 		
-	}
-
-	// Single item
-
-	@GetMapping("/offers/{id}")
-	Offer oneOffer(@PathVariable Long id) {
-		return offerRepository.findById(id).orElseThrow(() -> new OfferNotFoundException(id));
 	}
 
 	@PutMapping("/offers/{id}")
