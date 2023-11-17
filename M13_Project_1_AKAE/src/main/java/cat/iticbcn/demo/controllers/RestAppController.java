@@ -103,10 +103,15 @@ public class RestAppController {
 		
 	@PostMapping(value="companies/{id}/offers")
 	public ResponseEntity<Offer> createOfferCompany(@RequestBody Offer offer, @PathVariable("id") Long id){
-		Optional<Company> company = companyRepository.findById(id);
-		offer.setCompany(company.get());
-		Offer newof = offerRepository.save(offer);
-		return ResponseEntity.ok(newof);
+		try{
+			Optional<Company> company = companyRepository.findById(id);
+			offer.setCompany(company.get());
+			Offer newof = offerRepository.save(offer);
+			return ResponseEntity.ok(newof);
+		} catch (Exception e) {
+			throw new CompanyNotFoundException(id);
+		}
+		
 	}
 
 	// Single item
@@ -123,10 +128,7 @@ public class RestAppController {
 			offer.setTitle(newOffer.getTitle());
 			offer.setDescription(newOffer.getDescription());
 			return offerRepository.save(offer);
-		}).orElseGet(() -> {
-			newOffer.setId(id);
-			return offerRepository.save(newOffer);
-		});
+		}).orElseThrow(() -> new OfferNotFoundException(id));
 	}
 
 	@DeleteMapping("companies/{idCo}/offers/{idOf}")
