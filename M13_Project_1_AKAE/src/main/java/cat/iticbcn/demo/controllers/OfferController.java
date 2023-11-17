@@ -1,8 +1,11 @@
 package cat.iticbcn.demo.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,51 +24,38 @@ import cat.iticbcn.demo.repository.OfferRepository;
 @RestController
 public class OfferController {
 
-	@Autowired
-	private final OfferRepository repository;
-
-	public OfferController(OfferRepository repository) {
-		this.repository = repository;
-	}
-
-	// Aggregate root
-	// tag::get-aggregate-root[]
-	@GetMapping("/offers")
-	List<Offer> all() {
-		return repository.findAll();
-	}
-	// end::get-aggregate-root[]
-
-	@PostMapping("/offers")
-	Offer newOffer(@RequestBody Offer newOffer) {
-		return repository.save(newOffer);
-	}
-
-	// Single item
-
-	@GetMapping("/offers/{id}")
-	Offer one(@PathVariable Long id) {
-
-		return repository.findById(id)
-				.orElseThrow(() -> new OfferNotFoundException(id));
-	}
-
-	@PutMapping("/offers/{id}")
-	Offer replaceOffer(@RequestBody Offer newOffer, @PathVariable Long id) {
-
-		return repository.findById(id)
-			.map(offer -> {
-			offer.setTitle(newOffer.getTitle());
-			offer.setDescription(newOffer.getDescription());
-			return repository.save(offer);
-		}).orElseGet(() -> {
-			newOffer.setId(id);
-			return repository.save(newOffer);
-		});
-	}
-
-	@DeleteMapping("/offers/{id}")
-	void deleteOffer(@PathVariable Long id) {
-		repository.deleteById(id);
-	}
+	
+	/*
+	 * @Autowired private final OfferRepository repository;
+	 * 
+	 * public OfferController(OfferRepository repository) { this.repository =
+	 * repository; }
+	 * 
+	 * // Aggregate root // tag::get-aggregate-root[]
+	 * 
+	 * @GetMapping("/offers") List<Offer> all() { return repository.findAll(); } //
+	 * //end::get-aggregate-root[]
+	 * 
+	 * @PostMapping("/offers") Offer newOffer(@RequestBody Offer newOffer) { return
+	 * repository.save(newOffer); }
+	 * 
+	 * // Single item
+	 * 
+	 * @GetMapping("/offers/{id}") Offer one(@PathVariable Long id) {
+	 * 
+	 * return repository.findById(id).orElseThrow(() -> new
+	 * OfferNotFoundException(id)); }
+	 * 
+	 * @PutMapping("/offers/{id}") Offer replaceOffer(@RequestBody Offer
+	 * newOffer, @PathVariable Long id) {
+	 * 
+	 * return repository.findById(id).map(offer -> {
+	 * offer.setTitle(newOffer.getTitle());
+	 * offer.setDescription(newOffer.getDescription()); return
+	 * repository.save(offer); }).orElseGet(() -> { newOffer.setId(id); return
+	 * repository.save(newOffer); }); }
+	 * 
+	 * @DeleteMapping("/offers/{id}") void deleteOffer(@PathVariable Long id) {
+	 * repository.deleteById(id); }
+	 */
 }

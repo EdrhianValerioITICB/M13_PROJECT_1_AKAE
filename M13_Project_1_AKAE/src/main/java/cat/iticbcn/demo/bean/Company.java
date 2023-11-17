@@ -8,32 +8,44 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
 public class Company {
 
-	private @Id @GeneratedValue Long id;
+	@Id @GeneratedValue (strategy = GenerationType.IDENTITY) 
+	private Long id;
 	private String name;
 	private int employees;
-	private int socialSecurityNumber;
+	private String socialSecurityNumber;
 	private String owner;
 	private String address;
-	private int phoneNumber;
+	private String phoneNumber;
 	private String email;
 	private String type;
 @JsonIgnore
 @OneToMany(mappedBy="company",cascade=CascadeType.ALL)
 	private List<Offer> offers;
 
+	@OneToMany(mappedBy = "company", cascade = 	CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Offer> offers = new ArrayList<>();
+
+
 	public Company() {
 
 	}
 
+
 	public Company(String name, int employees, int socialSecurityNumber, String owner, String address, int phoneNumber,
 			String email, String type, List<Offer> offers) {
+
+	public Company(String name, int employees, String socialSecurityNumber, String owner, String address,
+			String phoneNumber, String email, String type, List<Offer> offers) {
+
 		super();
 		this.name = name;
 		this.employees = employees;
@@ -43,8 +55,14 @@ public class Company {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.type = type;
+
 		this.offers=offers;
+
+		this.offers = offers;
+
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -70,11 +88,11 @@ public class Company {
 		this.employees = employees;
 	}
 
-	public int getSocialSecurityNumber() {
+	public String getSocialSecurityNumber() {
 		return socialSecurityNumber;
 	}
 
-	public void setSocialSecurityNumber(int socialSecurityNumber) {
+	public void setSocialSecurityNumber(String socialSecurityNumber) {
 		this.socialSecurityNumber = socialSecurityNumber;
 	}
 
@@ -94,11 +112,11 @@ public class Company {
 		this.address = address;
 	}
 
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -117,8 +135,6 @@ public class Company {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
 
 	public List<Offer> getOffers() {
 		return offers;
