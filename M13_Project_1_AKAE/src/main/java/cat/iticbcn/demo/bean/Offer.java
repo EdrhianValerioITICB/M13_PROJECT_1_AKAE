@@ -21,7 +21,11 @@ public class Offer {
 	private String title;
 	private String description;
 	
+
+	@ManyToOne( fetch = FetchType.LAZY)
+
 	@ManyToOne(fetch = FetchType.EAGER)
+
 	@JsonIgnore
 	@JoinColumn(name="company_id",nullable=false)
 	private Company company;
