@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cat.iticbcn.demo.Exception.CompanyAndOfferNotConnectedException;
 import cat.iticbcn.demo.Exception.CompanyNotFoundException;
 import cat.iticbcn.demo.Exception.OfferNotFoundException;
 import cat.iticbcn.demo.bean.Company;
