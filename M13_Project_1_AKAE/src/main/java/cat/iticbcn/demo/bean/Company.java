@@ -39,6 +39,10 @@ public class Company {
 
 	}
 
+
+	public Company(String name, int employees, int socialSecurityNumber, String owner, String address, int phoneNumber,
+			String email, String type, List<Offer> offers) {
+
 	public Company(String name, int employees, String socialSecurityNumber, String owner, String address,
 			String phoneNumber, String email, String type, List<Offer> offers) {
 

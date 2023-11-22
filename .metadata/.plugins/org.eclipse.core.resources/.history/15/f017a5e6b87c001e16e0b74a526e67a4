@@ -1,0 +1,13 @@
+package cat.iticbcn.demo.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import cat.iticbcn.demo.bean.Company;
+
+public interface OfferRepository extends JpaRepository<Company, Long> {
+	
+
+	
+	
+
+}

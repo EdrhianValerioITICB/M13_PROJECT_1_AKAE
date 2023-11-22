@@ -1,0 +1,5 @@
+package cat.iticbcn.demo.database;
+
+public class LoadDatabase {
+
+}
