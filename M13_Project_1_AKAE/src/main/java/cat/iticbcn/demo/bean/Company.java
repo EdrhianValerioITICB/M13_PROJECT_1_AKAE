@@ -27,8 +27,13 @@ public class Company {
 	private String phoneNumber;
 	private String email;
 	private String type;
+@JsonIgnore
+@OneToMany(mappedBy="company",cascade=CascadeType.ALL)
+	private List<Offer> offers;
+
 	@OneToMany(mappedBy = "company", cascade = 	CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Offer> offers = new ArrayList<>();
+
 
 	public Company() {
 
@@ -36,6 +41,7 @@ public class Company {
 
 	public Company(String name, int employees, String socialSecurityNumber, String owner, String address,
 			String phoneNumber, String email, String type, List<Offer> offers) {
+
 		super();
 		this.name = name;
 		this.employees = employees;
@@ -45,7 +51,11 @@ public class Company {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.type = type;
+
+		this.offers=offers;
+
 		this.offers = offers;
+
 	}
 
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cat.iticbcn.demo.Exception.CompanyAndOfferNotConnectedException;
 import cat.iticbcn.demo.Exception.CompanyNotFoundException;
 import cat.iticbcn.demo.Exception.OfferNotFoundException;
 import cat.iticbcn.demo.bean.Company;
@@ -94,26 +95,32 @@ public class RestAppController {
 	}
 	// end::get-aggregate-root[]
 
+	// Single item
+
+		@GetMapping("/offers/{id}")
+		Offer oneOffer(@PathVariable Long id) {
+			return offerRepository.findById(id).orElseThrow(() -> new OfferNotFoundException(id));
+		}
+		
 	@GetMapping(value="companies/{id}/offers")
 	List<Offer> getOffer(@PathVariable("id") Long id){
 		Optional<Company> company = companyRepository.findById(id);
 		List<Offer> offers = (List<Offer>) company.get().getOffers();
 		return offers;
 	}
+	
 		
 	@PostMapping(value="companies/{id}/offers")
 	public ResponseEntity<Offer> createOfferCompany(@RequestBody Offer offer, @PathVariable("id") Long id){
-		Optional<Company> company = companyRepository.findById(id);
-		offer.setCompany(company.get());
-		Offer newof = offerRepository.save(offer);
-		return ResponseEntity.ok(newof);
-	}
-
-	// Single item
-
-	@GetMapping("/offers/{id}")
-	Offer oneOffer(@PathVariable Long id) {
-		return offerRepository.findById(id).orElseThrow(() -> new OfferNotFoundException(id));
+		try{
+			Optional<Company> company = companyRepository.findById(id);
+			offer.setCompany(company.get());
+			Offer newof = offerRepository.save(offer);
+			return ResponseEntity.ok(newof);
+		} catch (Exception e) {
+			throw new CompanyNotFoundException(id);
+		}
+		
 	}
 
 	@PutMapping("/offers/{id}")
@@ -123,19 +130,25 @@ public class RestAppController {
 			offer.setTitle(newOffer.getTitle());
 			offer.setDescription(newOffer.getDescription());
 			return offerRepository.save(offer);
-		}).orElseGet(() -> {
-			newOffer.setId(id);
-			return offerRepository.save(newOffer);
-		});
+		}).orElseThrow(() -> new OfferNotFoundException(id));
 	}
 
-	@DeleteMapping("companies/{idCo}/offers/{idOf}")
+@DeleteMapping("companies/{idCo}/offers/{idOf}")
 	@Transactional
 	void deleteOffer(@PathVariable Long idCo, @PathVariable Long idOf) {
+	 
 		Optional<Company> company = Optional.of(companyRepository.findById(idCo).orElseThrow(() -> new CompanyNotFoundException(idCo)));
 		Optional<Offer> offer = Optional.of(offerRepository.findById(idOf).orElseThrow(() -> new OfferNotFoundException(idOf)));
+		if(!company.get().getOffers().contains(offer.get().getId())) {
+			
+			throw new CompanyAndOfferNotConnectedException(idCo, idOf);
+			
+		}
 		company.get().getOffers().remove(offer.get());
 		offerRepository.deleteById(idOf);
+		
+		
+		
 		
 	}
 }
