@@ -7,4 +7,5 @@ import cat.iticbcn.demo.bean.Offer;
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 	void deleteByCompany(Company co);
+
 }

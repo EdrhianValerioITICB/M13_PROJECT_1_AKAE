@@ -1,16 +1,13 @@
-package cat.iticbcn.demo;
+package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class M13Project1AkaeApplication {
+public class DemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(M13Project1AkaeApplication.class, args);
+		SpringApplication.run(DemoApplication.class, args);
 	}
-	
-	
-	
 
 }
