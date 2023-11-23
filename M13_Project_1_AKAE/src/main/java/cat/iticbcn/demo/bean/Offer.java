@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +13,9 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Offer {
-	private @Id @GeneratedValue Long id;
+
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String title;
 	private String description;
 	

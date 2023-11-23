@@ -24,28 +24,6 @@ import org.springframework.context.annotation.Configuration;
 
 //@Configuration
 public class LoadDatabase {
-	
-
-	 private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
-Company c;
-	  @Bean
-	  CommandLineRunner initDatabase(CompanyRepository repository) {
-		  
-		  
-	    return args -> {
-	    	
-	    	
-	      log.info("Preloading " + 
-	    repository.save(new Company("Empresa 1", 54,190,"pepe", "C/ Sanchez Avilo", 978277378,"empresa1@gmail.com", "financiera",new ArrayList<> ())));
-	    
-	     
-	      log.info("Preloading " + 
-	    repository.save(new Company("Empresa 2", 45,901,"santiago", "C/ Sanchez Avilo", 978256538,"empresa2@gmail.com", "financiera",new ArrayList<> ())));
-	      
-	      
-	    };
-	  }
-	
 
 	/*
 	 * private static final Logger log =

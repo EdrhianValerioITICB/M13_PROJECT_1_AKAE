@@ -27,21 +27,12 @@ public class Company {
 	private String phoneNumber;
 	private String email;
 	private String type;
-@JsonIgnore
+
 @OneToMany(mappedBy="company",cascade=CascadeType.ALL)
 	private List<Offer> offers;
-
-	@OneToMany(mappedBy = "company", cascade = 	CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Offer> offers = new ArrayList<>();
-
-
+  
 	public Company() {
-
 	}
-
-
-	public Company(String name, int employees, int socialSecurityNumber, String owner, String address, int phoneNumber,
-			String email, String type, List<Offer> offers) {
 
 	public Company(String name, int employees, String socialSecurityNumber, String owner, String address,
 			String phoneNumber, String email, String type, List<Offer> offers) {
