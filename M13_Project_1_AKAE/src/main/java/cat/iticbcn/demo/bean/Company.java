@@ -30,9 +30,8 @@ public class Company {
 
 @OneToMany(mappedBy="company",cascade=CascadeType.ALL)
 	private List<Offer> offers;
-
+  
 	public Company() {
-
 	}
 
 	public Company(String name, int employees, String socialSecurityNumber, String owner, String address,

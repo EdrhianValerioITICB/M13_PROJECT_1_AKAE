@@ -1,0 +1,5 @@
+package cat.iticbcn.demo.repository;
+
+public class OfferRepository {
+
+}

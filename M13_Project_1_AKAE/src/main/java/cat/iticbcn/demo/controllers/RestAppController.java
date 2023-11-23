@@ -128,10 +128,9 @@ public class RestAppController {
 		}).orElseThrow(() -> new OfferNotFoundException(id));
 	}
 
-	@DeleteMapping("companies/{idCo}/offers/{idOf}")
+@DeleteMapping("companies/{idCo}/offers/{idOf}")
 	@Transactional
 	void deleteOffer(@PathVariable Long idCo, @PathVariable Long idOf) {
-
 		Optional<Company> company = Optional
 				.of(companyRepository.findById(idCo).orElseThrow(() -> new CompanyNotFoundException(idCo)));
 		Optional<Offer> offer = Optional
@@ -143,6 +142,7 @@ public class RestAppController {
 		}
 		company.get().getOffers().remove(offer.get());
 		offerRepository.deleteById(idOf);
+
 
 	}
 }
