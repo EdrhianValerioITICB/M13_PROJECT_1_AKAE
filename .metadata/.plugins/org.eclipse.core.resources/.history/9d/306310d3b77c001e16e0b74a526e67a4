@@ -1,0 +1,12 @@
+package cat.iticbcn.demo.bean;
+
+public class Offer {
+	
+	
+	private long id;
+	private String nom;
+	
+	
+	
+
+}
