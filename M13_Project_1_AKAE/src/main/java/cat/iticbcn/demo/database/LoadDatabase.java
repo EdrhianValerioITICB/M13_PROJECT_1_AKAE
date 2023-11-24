@@ -26,6 +26,9 @@ import org.springframework.context.annotation.Configuration;
 public class LoadDatabase {
 
 	/*
+	 * Prova per mirar si funciona bé git
+	 */
+	/*
 	 * private static final Logger log =
 	 * LoggerFactory.getLogger(LoadDatabase.class);
 	 * 
