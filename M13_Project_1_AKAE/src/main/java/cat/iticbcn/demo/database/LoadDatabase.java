@@ -27,6 +27,7 @@ public class LoadDatabase {
 
 	/*
 	 * Prova per mirar si funciona bé git
+	 * Segona prova
 	 */
 	/*
 	 * private static final Logger log =
