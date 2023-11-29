@@ -101,8 +101,18 @@ public class RestAppController {
 	@GetMapping(value = "companies/{id}/offers")
 	List<Offer> getOffer(@PathVariable("id") Long id) {
 		Optional<Company> company = companyRepository.findById(id);
-		List<Offer> offers = (List<Offer>) company.get().getOffers();
+		List<Offer> offers = company.get().getOffers();
 		return offers;
+	}
+
+	@GetMapping(value = "companies/{idCo}/offers/{idOf}")
+	Optional<Offer> getOfferByCompany(@PathVariable("idCo") Long idCo, @PathVariable("idOf") Long idOf){
+		Optional<Company> company = Optional.ofNullable(companyRepository.findById(idCo).orElseThrow(() -> new CompanyNotFoundException(idCo)));
+		Optional<Offer> offer = Optional.ofNullable(offerRepository.findById(idOf).orElseThrow(() -> new OfferNotFoundException(idOf)));
+		if (!company.get().getOffers().contains(offer.get())) {
+			throw new CompanyAndOfferNotConnectedException(idCo, idOf);
+		}
+		return offer;
 	}
 
 	@PostMapping(value = "companies/{id}/offers")
@@ -127,22 +137,18 @@ public class RestAppController {
 			return offerRepository.save(offer);
 		}).orElseThrow(() -> new OfferNotFoundException(id));
 	}
-//Testing git
+
 @DeleteMapping("companies/{idCo}/offers/{idOf}")
 	@Transactional
-	void deleteOffer(@PathVariable Long idCo, @PathVariable Long idOf) {
+	public void deleteOffer(@PathVariable Long idCo, @PathVariable Long idOf) {
 		Optional<Company> company = Optional
 				.of(companyRepository.findById(idCo).orElseThrow(() -> new CompanyNotFoundException(idCo)));
 		Optional<Offer> offer = Optional
 				.of(offerRepository.findById(idOf).orElseThrow(() -> new OfferNotFoundException(idOf)));
 		if (!company.get().getOffers().contains(offer.get())) {
-
 			throw new CompanyAndOfferNotConnectedException(idCo, idOf);
-
 		}
 		company.get().getOffers().remove(offer.get());
 		offerRepository.deleteById(idOf);
-
-
 	}
 }
