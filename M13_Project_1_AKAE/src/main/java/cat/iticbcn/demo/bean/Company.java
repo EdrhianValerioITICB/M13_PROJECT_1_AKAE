@@ -1,14 +1,11 @@
 package cat.iticbcn.demo.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,18 +14,36 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Company {
 
+	@Schema(example= "7", description = "Company's numerical identifier - primary key")
 	@Id @GeneratedValue (strategy = GenerationType.IDENTITY) 
 	private Long id;
+
+	@Schema(example= "Amazon", description = "Company full name")
 	private String name;
+
+	@Schema(example= "205", description = "Number of employees of the Company")
 	private int employees;
+
+	@Schema(example= "7748190752", description = "Company's socialSecurityNumber")
 	private String socialSecurityNumber;
+
+	@Schema(example = "Jeff Bezos", description = "Owner of the company")
 	private String owner;
+
+	@Schema(example = "410 Terry Ave N, Seattle 98109, WA", description = "Company's address of one of their offices")
 	private String address;
+
+	@Schema(example = "713 443 966", description = "Company's phone number")
 	private String phoneNumber;
+
+	@Schema(example = "clients@amazon.com", description = "Company's email")
 	private String email;
+
+	@Schema(example = "Tech multinational", description = "Company's Type")
 	private String type;
 
-@OneToMany(mappedBy="company",cascade=CascadeType.ALL)
+	@Schema(description = "Company's list of Offers")
+	@OneToMany(mappedBy="company",cascade=CascadeType.ALL)
 	private List<Offer> offers;
   
 	public Company() {
