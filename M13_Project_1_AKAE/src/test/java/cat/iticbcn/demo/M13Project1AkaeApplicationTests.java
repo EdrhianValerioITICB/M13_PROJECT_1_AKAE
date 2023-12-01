@@ -1,4 +1,4 @@
-package cat.iticbcn.demo;
+ package cat.iticbcn.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
