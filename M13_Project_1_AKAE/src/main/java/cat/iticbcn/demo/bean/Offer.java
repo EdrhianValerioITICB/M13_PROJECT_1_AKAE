@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,11 +17,14 @@ import jakarta.persistence.ManyToOne;
 public class Offer {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Schema(example = "3", description = "Offer numerical identifier, primary key")
 	private Long id;
-	private String title;
-	private String description;
-	
 
+	@Schema(example = "Senior Developer", description = "Offer title")
+	private String title;
+
+	@Schema(example = "Editor", description = "Offer tescription")
+	private String description;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 
