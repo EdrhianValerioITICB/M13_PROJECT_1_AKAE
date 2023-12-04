@@ -3,6 +3,7 @@ package cat.iticbcn.demo.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import cat.iticbcn.demo.Service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +32,12 @@ public class RestAppController {
 	@Autowired
 	private final CompanyRepository companyRepository;
 
-	public RestAppController(OfferRepository offerRepository, CompanyRepository companyRepository) {
+	private final CompanyService companyService;
+
+	public RestAppController(OfferRepository offerRepository, CompanyRepository companyRepository , CompanyService companyService) {
 		this.offerRepository = offerRepository;
 		this.companyRepository = companyRepository;
+		this.companyService = companyService;
 	}
 
 	// COMPANY METHODS----------------------------------------------
@@ -41,27 +45,27 @@ public class RestAppController {
 	// tag::get-aggregate-root[]
 	@GetMapping("/companies")
 	List<Company> allCompanies() {
-		return companyRepository.findAll();
+		return (this.companyService.findAll());
 	}
 	// end::get-aggregate-root[]
 
 	@PostMapping("/companies")
 	Company newCompany(@RequestBody Company newCompany) {
-		return companyRepository.save(newCompany);
+		return this.companyRepository.save(newCompany);
 	}
 
 	// Single item
 
 	@GetMapping("/companies/{id}")
 	Company oneCompany(@PathVariable Long id) {
-
-		return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
+		return this.companyService.findById(id).orElseThrow(()
+				-> new CompanyNotFoundException(id));
 	}
 
 	@PutMapping("/companies/{id}")
 	Company replaceCompany(@RequestBody Company newCompany, @PathVariable Long id) {
 
-		return companyRepository.findById(id).map(company -> {
+		return companyService.findById(id).map(company -> {
 			company.setName(newCompany.getName());
 			company.setEmployees(newCompany.getEmployees());
 			company.setSocialSecurityNumber(newCompany.getSocialSecurityNumber());
@@ -79,7 +83,7 @@ public class RestAppController {
 
 	@DeleteMapping("/companies/{id}")
 	void deleteCompany(@PathVariable Long id) {
-		companyRepository.deleteById(id);
+		companyService.deleteById(id);
 	}
 
 	// OFFER METHODS----------------------------------------------
@@ -120,7 +124,6 @@ public class RestAppController {
 
 	@PutMapping("/offers/{id}")
 	Offer replaceOffer(@RequestBody Offer newOffer, @PathVariable Long id) {
-
 		return offerRepository.findById(id).map(offer -> {
 			offer.setTitle(newOffer.getTitle());
 			offer.setDescription(newOffer.getDescription());
@@ -130,7 +133,7 @@ public class RestAppController {
 //Testing git
 @DeleteMapping("companies/{idCo}/offers/{idOf}")
 	@Transactional
-	void deleteOffer(@PathVariable Long idCo, @PathVariable Long idOf) {
+	public void deleteOffer(@PathVariable Long idCo, @PathVariable Long idOf) {
 		Optional<Company> company = Optional
 				.of(companyRepository.findById(idCo).orElseThrow(() -> new CompanyNotFoundException(idCo)));
 		Optional<Offer> offer = Optional
