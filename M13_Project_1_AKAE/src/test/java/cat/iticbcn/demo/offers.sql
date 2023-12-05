@@ -1,0 +1,21 @@
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (3, '7785898699', '6385780888', '0191 Harbort Lane', 'nlaurentino0@mozilla.org', 'Jaxworks', 'Nona Laurentino', 'Start-up Environment');
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (449, '5833930659', '9653050609', '56 Mallory Court', 'jcowup1@posterous.com', 'Vidoo', 'Jacki Cowup', 'DDM');
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (260, '3651215800', '2095991212', '1954 Dryden Junction', 'achoffin2@archive.org', 'BlogXS', 'Aurea Choffin', 'Agents');
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (437, '6948202618', '6417301310', '192 Derek Pass', 'otirone3@blinklist.com', 'Realcube', 'Orrin Tirone', 'Omnis');
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (418, '5203448034', '7231784634', '8 Harper Lane', 'hmcgrah4@reddit.com', 'Oozz', 'Husein McGrah', 'Graphics');
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (336, '3231278695', '5343853933', '60544 Esch Court', 'awithull5@state.gov', 'Kwimbee', 'Anitra Withull', 'VHDL-AMS');
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (285, '9524055531', '2865428320', '6319 Artisan Hill', 'bbrumble6@mail.ru', 'Linkbridge', 'Bessy Brumble', 'XACML');
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (437, '5293614551', '9816055548', '5 Bartillon Park', 'woleszcuk7@soup.io', 'Skiba', 'Wynne Oleszcuk', 'Win CVS');
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (178, '7881922064', '7748190752', '91200 Sachtjen Parkway', 'hdubery8@sciencedaily.com', 'Devshare', 'Heath Dubery', 'GT-Power');
+insert into COMPANY (employees, phone_number, social_security_number, address, email, name, owner, type) values (295, '5174707897', '7745789347', '807 Bartillon Place', 'alismore9@imageshack.us', 'Buzzster', 'Addi Lismore', 'LLC');
+
+insert into OFFER (company_id, description, title) values (3L, 'Environmental Specialist', 'Recruiter');
+insert into OFFER (company_id, description, title) values (5, 'Accounting Assistant II', 'Information Systems Manager');
+insert into OFFER (company_id, description, title) values (8, 'Engineer III', 'Accounting Assistant IV');
+insert into OFFER (company_id, description, title) values (3, 'Senior Developer', 'Editor');
+insert into OFFER (company_id, description, title) values (4, 'Geological Engineer', 'Junior Executive');
+insert into OFFER (company_id, description, title) values (10, 'Operator', 'General Manager');
+insert into OFFER (company_id, description, title) values (7, 'Software Test Engineer II', 'General Manager');
+insert into OFFER (company_id, description, title) values (7, 'Marketing Assistant', 'Quality Control Specialist');
+insert into OFFER (company_id, description, title) values (10, 'Structural Engineer', 'Chemical Engineer');
+insert into OFFER (company_id, description, title) values (7, 'Budget/Accounting Analyst II', 'Civil Engineer');
