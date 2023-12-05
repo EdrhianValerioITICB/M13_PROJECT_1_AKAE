@@ -2,7 +2,7 @@ package cat.iticbcn.demo.controllers;
 
 import java.util.List;
 import java.util.Optional;
-
+import cat.iticbcn.demo.Service.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -39,9 +39,12 @@ public class RestAppController {
 	@Autowired
 	private final CompanyRepository companyRepository;
 
-	public RestAppController(OfferRepository offerRepository, CompanyRepository companyRepository) {
+	private final CompanyService companyService;
+
+	public RestAppController(OfferRepository offerRepository, CompanyRepository companyRepository , CompanyService companyService) {
 		this.offerRepository = offerRepository;
 		this.companyRepository = companyRepository;
+		this.companyService = companyService;
 	}
 	// COMPANY METHODS----------------------------------------------
 	// Aggregate root
@@ -57,7 +60,7 @@ public class RestAppController {
 	@Operation(summary = "Find all Companies", description = "Retieves all Companies from database")
 	@GetMapping("/companies")
 	List<Company> allCompanies() {
-		return companyRepository.findAll();
+		return (this.companyService.findAll());
 	}
 	// end::get-aggregate-root[]
 	@ApiResponses(value = {
@@ -71,7 +74,7 @@ public class RestAppController {
 	@Operation(summary = "Add a Company", description = "Adds a Company in the database")
 	@PostMapping("/companies")
 	Company newCompany(@RequestBody Company newCompany) {
-		return companyRepository.save(newCompany);
+		return this.companyRepository.save(newCompany);
 	}
 
 	// Single item
@@ -86,8 +89,8 @@ public class RestAppController {
 	@Operation(summary = "Find a Company", description = "Find a Company by it's id")
 	@GetMapping("/companies/{id}")
 	Company oneCompany(@PathVariable Long id) {
-
-		return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
+		return this.companyService.findById(id).orElseThrow(()
+				-> new CompanyNotFoundException(id));
 	}
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Modified Company", content ={
@@ -101,7 +104,7 @@ public class RestAppController {
 	@PutMapping("/companies/{id}")
 	Company replaceCompany(@RequestBody Company newCompany, @PathVariable Long id) {
 
-		return companyRepository.findById(id).map(company -> {
+		return companyService.findById(id).map(company -> {
 			company.setName(newCompany.getName());
 			company.setEmployees(newCompany.getEmployees());
 			company.setSocialSecurityNumber(newCompany.getSocialSecurityNumber());
@@ -127,6 +130,7 @@ public class RestAppController {
 	@Operation(summary = "Delete a Company", description = "Deletes a Company by it's id")
 	@DeleteMapping("/companies/{id}")
 	void deleteCompany(@PathVariable Long id) {
+		companyService.deleteById(id);
 		Optional<Company> company = Optional.ofNullable(companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id)));;
 		companyRepository.deleteById(id);
 	}
@@ -228,7 +232,6 @@ public class RestAppController {
 	@Operation(summary = "Modify Offer", description = "Modifies an Offer by it's id")
 	@PutMapping("/offers/{id}")
 	Offer replaceOffer(@RequestBody Offer newOffer, @PathVariable Long id) {
-
 		return offerRepository.findById(id).map(offer -> {
 			offer.setTitle(newOffer.getTitle());
 			offer.setDescription(newOffer.getDescription());
