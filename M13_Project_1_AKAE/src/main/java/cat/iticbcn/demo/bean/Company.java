@@ -15,57 +15,55 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
-@Table(name = "Companies")
+@Table(name = "COMPANIES")
 public class Company {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Schema(example= "7", description = "Company's numerical identifier - primary key")
-    private Long id;
+	private Long id;
 
 	@Schema(example= "Amazon", description = "Company full name")
-    @Column(name = "company_name")
-    private String name;
+	@Column(name = "company_name")
+	private String name;
 
 	@Schema(example= "205", description = "Number of employees of the Company")
-    @Column(name = "number_of_employees")
-    private int employees;
+	@Column(name = "number_of_employees")
+	private int employees;
 
 	@Schema(example= "7748190752", description = "Company's socialSecurityNumber")
-    @Column(unique = true)
-    private String socialSecurityNumber;
+	@Column(name = "social_security_number", unique = true)
+	private String socialSecurityNumber;
 
 	@Schema(example = "Jeff Bezos", description = "Owner of the company")
-    @Column(name = "owner_name")
-    private String owner;
+	@Column(name = "owner_name")
+	private String owner;
 
 	@Schema(example = "410 Terry Ave N, Seattle 98109, WA", description = "Company's address of one of their offices")
-    @Column(name = "company_address")
-    private String address;
+	@Column(name = "company_address")
+	private String address;
 
 	@Schema(example = "713 443 966", description = "Company's phone number")
-    @Column(unique = true)
-    private String phoneNumber;
+	@Column(name = "phone_number", unique = true)
+	private String phoneNumber;
 
 	@Schema(example = "clients@amazon.com", description = "Company's email")
-    @Column(unique = true)
-    private String email;
+	@Column(unique = true)
+	private String email;
 
 	@Schema(example = "Tech multinational", description = "Company's Type")
-    @Column(name = "company_type")
-    private String type;
+	@Column(name = "company_type")
+	private String type;
 
 	@Schema(description = "Company's list of Offers")
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
-    private List<Offer> offers;
+	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+	private List<Offer> offers;
 
 	public Company() {
 	}
 
-	public Company(String name, int employees, String socialSecurityNumber, String owner, String address,
-			String phoneNumber, String email, String type, List<Offer> offers) {
-
-		super();
+	public Company(Long id, String name, int employees, String socialSecurityNumber, String owner, String address, String phoneNumber, String email, String type, List<Offer> offers) {
+		this.id = id;
 		this.name = name;
 		this.employees = employees;
 		this.socialSecurityNumber = socialSecurityNumber;
@@ -75,7 +73,6 @@ public class Company {
 		this.email = email;
 		this.type = type;
 		this.offers = offers;
-
 	}
 
 	public Long getId() {
@@ -174,8 +171,8 @@ public class Company {
 		Company other = (Company) obj;
 		return Objects.equals(address, other.address) && Objects.equals(email, other.email)
 				&& employees == other.employees && Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(owner, other.owner) && phoneNumber == other.phoneNumber
-				&& socialSecurityNumber == other.socialSecurityNumber && Objects.equals(type, other.type);
+				&& Objects.equals(owner, other.owner) && Objects.equals(phoneNumber, other.phoneNumber)
+				&& Objects.equals(socialSecurityNumber, other.socialSecurityNumber) && Objects.equals(type, other.type);
 	}
 
 	@Override
