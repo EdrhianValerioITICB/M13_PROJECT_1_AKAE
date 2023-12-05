@@ -14,7 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-@Table(name="OFFER")
 public class Offer {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,16 +31,15 @@ public class Offer {
 	@JsonIgnore
 	@JoinColumn(name="company_id",nullable=false)
 	private Company company;
-	
-	public Offer(String title, String description, Company company) {
-		super();
+
+	public Offer(Long id, String title, String description, Company company) {
+		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.company = company;
 	}
-	
+
 	public Offer() {}
-	
 
 	public Long getId() {
 		return id;
@@ -97,7 +95,7 @@ public class Offer {
 	public String toString() {
 		return "Offer [id=" + id + ", title=" + title + ", description=" + description + ", company=" + company + "]";
 	}
-	
-	
-	
+
+
+
 }
