@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+@Table(name="OFFER")
 public class Offer {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
