@@ -26,7 +26,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Optional<Company> findById(Long id) {
-        return this.companyRepository.findById(id);
+        return this.companyRepository.findById(id).map(company -> {
+            company.setName(company.getName().toUpperCase());
+            return company;
+        });
     }
 
     @Override
@@ -46,6 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Optional<Company> findByEmail(String email) {
+
         return this.companyRepository.findByEmail(email);
     }
 
@@ -62,30 +66,6 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void deleteById(Long id) {
         companyRepository.deleteById(id);
-    }
-
-    public Optional<Company> getCompanyById(Long companyId) {
-        return companyRepository.findById(companyId);
-    }
-
-    // Save a new company
-    public Company saveCompany(Company company) {
-        return companyRepository.save(company);
-    }
-
-    // Update an existing company
-    public Company updateCompany(Company company) {
-        return companyRepository.save(company);
-    }
-
-    // Delete a company by ID
-    public void deleteCompanyById(Long companyId) {
-        companyRepository.deleteById(companyId);
-    }
-
-    // Retrieve all companies
-    public List<Company> getAllCompanies() {
-        return companyRepository.findAll();
     }
 
 }
