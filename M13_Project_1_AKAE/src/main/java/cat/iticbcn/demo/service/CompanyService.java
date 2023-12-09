@@ -1,7 +1,8 @@
-package cat.iticbcn.demo.Service;
+package cat.iticbcn.demo.service;
 
 import cat.iticbcn.demo.bean.Company;
 import cat.iticbcn.demo.bean.Offer;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -25,4 +26,8 @@ public interface CompanyService {
     List<Company> findCompaniesByEmail(String email);
 
     void deleteById(@PathVariable Long id);
+
+    Company save(Company newCompany);
+
+    Company replaceCompany(Company newCompany, Long id);
 }
