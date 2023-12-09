@@ -12,7 +12,6 @@ http://localhost:8080/swagger-ui/indext.html
  */
 @Configuration
 public class OpenApiConfig {
-
     @Bean
     public OpenAPI openAp(){
         return new OpenAPI()

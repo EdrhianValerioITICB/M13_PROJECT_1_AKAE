@@ -2,7 +2,8 @@ package cat.iticbcn.demo.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import cat.iticbcn.demo.Service.CompanyService;
+import cat.iticbcn.demo.service.CompanyService;
+import cat.iticbcn.demo.service.OfferService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -41,14 +42,18 @@ public class RestAppController {
 
 	private final CompanyService companyService;
 
-	public RestAppController(OfferRepository offerRepository, CompanyRepository companyRepository , CompanyService companyService) {
+	private final OfferService offerService;
+
+	public RestAppController(OfferRepository offerRepository, CompanyRepository companyRepository , CompanyService companyService, OfferService offerService) {
 		this.offerRepository = offerRepository;
 		this.companyRepository = companyRepository;
 		this.companyService = companyService;
+		this.offerService = offerService;
 	}
+
 	// COMPANY METHODS----------------------------------------------
-	// Aggregate root
-	// tag::get-aggregate-root[]
+
+	//GET ALL COMPANIES
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved companies", content ={
 					@Content(mediaType = "application/json",
@@ -60,9 +65,11 @@ public class RestAppController {
 	@Operation(summary = "Find all Companies", description = "Retieves all Companies from database")
 	@GetMapping("/companies")
 	List<Company> allCompanies() {
-		return (this.companyService.findAll());
+		return companyService.findAll();
 	}
-	// end::get-aggregate-root[]
+
+
+	//CREATE COMPANY
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Created company", content ={
 					@Content(mediaType = "application/json",
@@ -74,10 +81,10 @@ public class RestAppController {
 	@Operation(summary = "Add a Company", description = "Adds a Company in the database")
 	@PostMapping("/companies")
 	Company newCompany(@RequestBody Company newCompany) {
-		return this.companyRepository.save(newCompany);
+		return companyService.save(newCompany);
 	}
 
-	// Single item
+	//GET ONE COMPANY
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved companies", content ={
 					@Content(mediaType = "application/json",
@@ -89,9 +96,10 @@ public class RestAppController {
 	@Operation(summary = "Find a Company", description = "Find a Company by it's id")
 	@GetMapping("/companies/{id}")
 	Company oneCompany(@PathVariable Long id) {
-		return this.companyService.findById(id).orElseThrow(()
-				-> new CompanyNotFoundException(id));
+		return companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
 	}
+
+	//REPLACE COMPANY
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Modified Company", content ={
 					@Content(mediaType = "application/json",
@@ -100,25 +108,14 @@ public class RestAppController {
 					@Content(mediaType = "application/json",
 							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
 	})
+
 	@Operation(summary = "Modify a Company", description = "Modifies a Company from the database")
 	@PutMapping("/companies/{id}")
 	Company replaceCompany(@RequestBody Company newCompany, @PathVariable Long id) {
-
-		return companyService.findById(id).map(company -> {
-			company.setName(newCompany.getName());
-			company.setEmployees(newCompany.getEmployees());
-			company.setSocialSecurityNumber(newCompany.getSocialSecurityNumber());
-			company.setOwner(newCompany.getOwner());
-			company.setAddress(newCompany.getAddress());
-			company.setPhoneNumber(newCompany.getPhoneNumber());
-			company.setEmail(newCompany.getEmail());
-			company.setType(newCompany.getType());
-			return companyRepository.save(company);
-		}).orElseGet(() -> {
-			newCompany.setId(id);
-			return companyRepository.save(newCompany);
-		});
+		return companyService.replaceCompany(newCompany, id);
 	}
+
+	//DELETE COMPANY
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Deleted company", content ={
 					@Content(mediaType = "application/json",
@@ -136,8 +133,7 @@ public class RestAppController {
 	}
 
 	// OFFER METHODS----------------------------------------------
-	// Aggregate root
-	// tag::get-aggregate-root[]
+
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved Offers", content ={
 					@Content(mediaType = "application/json",
@@ -149,11 +145,10 @@ public class RestAppController {
 	@Operation(summary = "Find all Offers", description = "Retieves all Offers from the database")
 	@GetMapping("/offers")
 	List<Offer> allOffers() {
-		return offerRepository.findAll();
+		return offerService.getAllOffers();
 	}
-	// end::get-aggregate-root[]
 
-	// Single item
+	//GET ONE OFFER
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved Offer", content ={
 					@Content(mediaType = "application/json",
@@ -165,8 +160,10 @@ public class RestAppController {
 	@Operation(summary = "Find an Offer", description = "Retieves an Offer from the database")
 	@GetMapping("/offers/{id}")
 	Offer oneOffer(@PathVariable Long id) {
-		return offerRepository.findById(id).orElseThrow(() -> new OfferNotFoundException(id));
+		return offerService.getOneOffer(id);
 	}
+
+	//GET OFFER BY COMPANY ID
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved Offers from company", content ={
 					@Content(mediaType = "application/json",
@@ -178,10 +175,10 @@ public class RestAppController {
 	@Operation(summary = "Find all Offers of a Company", description = "Retrieves all Offers of a Company by it's id")
 	@GetMapping(value = "companies/{id}/offers")
 	List<Offer> getOffer(@PathVariable("id") Long id) {
-		Optional<Company> company = companyRepository.findById(id);
-		List<Offer> offers = company.get().getOffers();
-		return offers;
+		return offerService.getOffersByCompanyId(id);
 	}
+
+	//GET OFFER BY COMPANY
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved Offers of the company", content ={
 					@Content(mediaType = "application/json",
@@ -193,13 +190,10 @@ public class RestAppController {
 	@Operation(summary = "Find and Offer", description = "Retrieves an Offer by it's id and from a specific Company by it's id")
 	@GetMapping(value = "companies/{idCo}/offers/{idOf}")
 	Optional<Offer> getOfferByCompany(@PathVariable("idCo") Long idCo, @PathVariable("idOf") Long idOf){
-		Optional<Company> company = Optional.ofNullable(companyRepository.findById(idCo).orElseThrow(() -> new CompanyNotFoundException(idCo)));
-		Optional<Offer> offer = Optional.ofNullable(offerRepository.findById(idOf).orElseThrow(() -> new OfferNotFoundException(idOf)));
-		if (!company.get().getOffers().contains(offer.get())) {
-			throw new CompanyAndOfferNotConnectedException(idCo, idOf);
-		}
-		return offer;
+		return offerService.getOfferByCompany(idCo, idOf);
 	}
+
+	//CREATE OFFER COMPANY
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Created Offer", content ={
 					@Content(mediaType = "application/json",
@@ -211,16 +205,10 @@ public class RestAppController {
 	@Operation(summary = "Create offer", description = "Adds a new Offer to the database")
 	@PostMapping(value = "companies/{id}/offers")
 	public ResponseEntity<Offer> createOfferCompany(@RequestBody Offer offer, @PathVariable("id") Long id) {
-		try {
-			Optional<Company> company = companyRepository.findById(id);
-			offer.setCompany(company.get());
-			Offer newof = offerRepository.save(offer);
-			return ResponseEntity.ok(newof);
-		} catch (Exception e) {
-			throw new CompanyNotFoundException(id);
-		}
+		return offerService.createOfferForCompany(offer, id);
 	}
 
+	//REPLACE OFFER
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Modified Offer", content ={
 					@Content(mediaType = "application/json",
@@ -232,12 +220,10 @@ public class RestAppController {
 	@Operation(summary = "Modify Offer", description = "Modifies an Offer by it's id")
 	@PutMapping("/offers/{id}")
 	Offer replaceOffer(@RequestBody Offer newOffer, @PathVariable Long id) {
-		return offerRepository.findById(id).map(offer -> {
-			offer.setTitle(newOffer.getTitle());
-			offer.setDescription(newOffer.getDescription());
-			return offerRepository.save(offer);
-		}).orElseThrow(() -> new OfferNotFoundException(id));
+		return offerService.updateOffer(id, newOffer);
 	}
+
+	//DELETE OFFER
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Deleted Offer", content ={
 					@Content(mediaType = "application/json",
@@ -247,17 +233,9 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
 	})
 	@Operation(summary = "Delete Offer", description = "Deletes an Offer from the database")
-@DeleteMapping("companies/{idCo}/offers/{idOf}")
+	@DeleteMapping("companies/{idCo}/offers/{idOf}")
 	@Transactional
 	public void deleteOffer(@PathVariable Long idCo, @PathVariable Long idOf) {
-		Optional<Company> company = Optional
-				.of(companyRepository.findById(idCo).orElseThrow(() -> new CompanyNotFoundException(idCo)));
-		Optional<Offer> offer = Optional
-				.of(offerRepository.findById(idOf).orElseThrow(() -> new OfferNotFoundException(idOf)));
-		if (!company.get().getOffers().contains(offer.get())) {
-			throw new CompanyAndOfferNotConnectedException(idCo, idOf);
-		}
-		company.get().getOffers().remove(offer.get());
-		offerRepository.deleteById(idOf);
-	}
+        offerService.deleteOffer(idCo, idOf);
+    }
 }

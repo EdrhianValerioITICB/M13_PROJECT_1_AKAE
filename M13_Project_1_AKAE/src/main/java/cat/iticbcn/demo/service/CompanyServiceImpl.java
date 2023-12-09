@@ -1,11 +1,10 @@
-package cat.iticbcn.demo.Service;
+package cat.iticbcn.demo.service;
 
 import cat.iticbcn.demo.bean.Company;
 import cat.iticbcn.demo.bean.Offer;
 import cat.iticbcn.demo.repository.CompanyRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +65,29 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void deleteById(Long id) {
         companyRepository.deleteById(id);
+    }
+
+    @Override
+    public Company save(Company newCompany) {
+        return companyRepository.save(newCompany);
+    }
+
+    @Override
+    public Company replaceCompany(Company newCompany, Long id) {
+        return companyRepository.findById(id).map(company -> {
+            company.setName(newCompany.getName());
+            company.setEmployees(newCompany.getEmployees());
+            company.setSocialSecurityNumber(newCompany.getSocialSecurityNumber());
+            company.setOwner(newCompany.getOwner());
+            company.setAddress(newCompany.getAddress());
+            company.setPhoneNumber(newCompany.getPhoneNumber());
+            company.setEmail(newCompany.getEmail());
+            company.setType(newCompany.getType());
+            return companyRepository.save(company);
+        }).orElseGet(() -> {
+            newCompany.setId(id);
+            return companyRepository.save(newCompany);
+        });
     }
 
 }

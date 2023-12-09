@@ -21,4 +21,6 @@ public interface OfferService {
     Offer updateOffer(Long id, Offer newOffer);
 
     void deleteOffer(Long idCo, Long idOf);
+
+    List<Offer> getAllOffers();
 }

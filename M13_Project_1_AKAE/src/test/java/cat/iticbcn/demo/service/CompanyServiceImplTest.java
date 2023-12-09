@@ -1,4 +1,4 @@
-package cat.iticbcn.demo.Service;
+package cat.iticbcn.demo.service;
 
 import cat.iticbcn.demo.bean.Company;
 import cat.iticbcn.demo.repository.CompanyRepository;
@@ -54,7 +54,7 @@ class CompanyServiceImplTest {
         //Given
 
         when(companyRepository.findById(anyLong())).thenReturn(Optional.of
-                (new Company("COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA"
+                (new Company(1L,"COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA"
                         , "713 443 966", "clients@amazon.com", "Tech multinational", null)));
         //Then
         Optional<Company> companyOpt = companyService.findById(1L);
@@ -87,7 +87,7 @@ class CompanyServiceImplTest {
 
     @Test
     void findCompaniesByName() {
-        when(companyRepository.findByNameContaining("COMPANY1")).thenReturn(List.of(new Company("COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA"
+        when(companyRepository.findByNameContaining("COMPANY1")).thenReturn(List.of(new Company(1L,"COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA"
                 , "713 443 966", "clients@amazon.com", "Tech multinational", null)));
 
         List<Company> companies = companyService.findCompaniesByName("COMPANY1");
@@ -103,7 +103,7 @@ class CompanyServiceImplTest {
     @Test
     void findCompaniesByType() {
 
-        when(companyRepository.findByType("Tech multinational")).thenReturn(List.of(new Company("COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA"
+        when(companyRepository.findByType("Tech multinational")).thenReturn(List.of(new Company(1L,"COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA"
                 , "713 443 966", "clients@amazon.com", "Tech multinational", null)));
 
         List<Company> companies = companyService.findCompaniesByType("Tech multinational");
@@ -120,7 +120,7 @@ class CompanyServiceImplTest {
     @Test
     void findCompaniesByEmployeesRange() {
 
-        when(companyRepository.findByEmployeesBetween(20, 60)).thenReturn(List.of(new Company("COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA"
+        when(companyRepository.findByEmployeesBetween(20, 60)).thenReturn(List.of(new Company(1L,"COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA"
                 , "713 443 966", "clients@amazon.com", "Tech multinational", null)));
 
         List<Company> companies = companyService.findCompaniesByEmployeesRange(20, 60);
@@ -137,7 +137,7 @@ class CompanyServiceImplTest {
     void findCompanyByEmail() {
         // Given
         String emailToSearch = "clients@amazon.com";
-        Company expectedCompany = new Company("COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA",
+        Company expectedCompany = new Company(1L,"COMPANY1", 50, "A7748190752Z", "Jeff Bezos", "410 Terry Ave N, Seattle 98109, WA",
                 "713 443 966", "clients@amazon.com", "Tech multinational", null);
 
         when(companyRepository.findByEmail("clients@amazon.com")).thenReturn(Optional.of(expectedCompany));
