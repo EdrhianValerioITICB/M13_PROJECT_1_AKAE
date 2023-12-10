@@ -58,9 +58,7 @@ public class RestAppController {
 			@ApiResponse(responseCode = "200", description = "Retrieved companies", content ={
 					@Content(mediaType = "application/json",
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Company not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
 	@Operation(summary = "Find all Companies", description = "Retieves all Companies from database")
 	@GetMapping("/companies")
@@ -74,9 +72,7 @@ public class RestAppController {
 			@ApiResponse(responseCode = "200", description = "Created company", content ={
 					@Content(mediaType = "application/json",
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Invalid company", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+			@ApiResponse(responseCode = "404", description = "Invalid company", content ={})
 	})
 	@Operation(summary = "Add a Company", description = "Adds a Company in the database")
 	@PostMapping("/companies")
@@ -89,9 +85,7 @@ public class RestAppController {
 			@ApiResponse(responseCode = "200", description = "Retrieved companies", content ={
 					@Content(mediaType = "application/json",
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Company not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
 	@Operation(summary = "Find a Company", description = "Find a Company by it's id")
 	@GetMapping("/companies/{id}")
@@ -104,9 +98,7 @@ public class RestAppController {
 			@ApiResponse(responseCode = "200", description = "Modified Company", content ={
 					@Content(mediaType = "application/json",
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Company not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
 
 	@Operation(summary = "Modify a Company", description = "Modifies a Company from the database")
@@ -120,9 +112,7 @@ public class RestAppController {
 			@ApiResponse(responseCode = "200", description = "Deleted company", content ={
 					@Content(mediaType = "application/json",
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Company not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
 	@Operation(summary = "Delete a Company", description = "Deletes a Company by it's id")
 	@DeleteMapping("/companies/{id}")
@@ -137,10 +127,8 @@ public class RestAppController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved Offers", content ={
 					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Offer not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
+			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
 	@Operation(summary = "Find all Offers", description = "Retieves all Offers from the database")
 	@GetMapping("/offers")
@@ -152,10 +140,8 @@ public class RestAppController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved Offer", content ={
 					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Offer not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
+			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
 	@Operation(summary = "Find an Offer", description = "Retieves an Offer from the database")
 	@GetMapping("/offers/{id}")
@@ -167,10 +153,8 @@ public class RestAppController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved Offers from company", content ={
 					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Company not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
+			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
 	@Operation(summary = "Find all Offers of a Company", description = "Retrieves all Offers of a Company by it's id")
 	@GetMapping(value = "companies/{id}/offers")
@@ -182,10 +166,8 @@ public class RestAppController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved Offers of the company", content ={
 					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Company or Offer not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
+			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
 	@Operation(summary = "Find and Offer", description = "Retrieves an Offer by it's id and from a specific Company by it's id")
 	@GetMapping(value = "companies/{idCo}/offers/{idOf}")
@@ -197,10 +179,8 @@ public class RestAppController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Created Offer", content ={
 					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Company not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
+			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
 	@Operation(summary = "Create offer", description = "Adds a new Offer to the database")
 	@PostMapping(value = "companies/{id}/offers")
@@ -212,10 +192,8 @@ public class RestAppController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Modified Offer", content ={
 					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Offer not found", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
+			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
 	@Operation(summary = "Modify Offer", description = "Modifies an Offer by it's id")
 	@PutMapping("/offers/{id}")
@@ -227,10 +205,8 @@ public class RestAppController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Deleted Offer", content ={
 					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
-			@ApiResponse(responseCode = "404", description = "Can't delete Offer", content ={
-					@Content(mediaType = "application/json",
-							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))})
+							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
+			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
 	@Operation(summary = "Delete Offer", description = "Deletes an Offer from the database")
 	@DeleteMapping("companies/{idCo}/offers/{idOf}")
