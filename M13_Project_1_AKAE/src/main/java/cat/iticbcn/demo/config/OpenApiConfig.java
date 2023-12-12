@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 /*
 http://localhost:8080/v3/api-docs
-http://localhost:8080/swagger-ui/indext.html
+http://localhost:8080/swagger-ui/index.html
  */
 @Configuration
 public class OpenApiConfig {
