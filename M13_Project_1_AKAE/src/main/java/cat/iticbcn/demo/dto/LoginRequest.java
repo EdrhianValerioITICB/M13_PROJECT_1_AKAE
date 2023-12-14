@@ -1,4 +1,6 @@
 package cat.iticbcn.demo.dto;
 
-public class LoginRequest {
+public record LoginRequest(String username, String password) {
+
+
 }
