@@ -20,6 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserEntityService userService;
 
     public UserDetailsServiceImpl(UserEntityService userService) {
+
         this.userService = userService;
     }
 
