@@ -44,7 +44,7 @@ public class SecurityConfig{
 		http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.authorizeHttpRequests()
-		.requestMatchers("/auth/**").permitAll()
+		.mvc("/auth/**").permitAll()
 		.anyRequest()
 		.authenticated();
 		
