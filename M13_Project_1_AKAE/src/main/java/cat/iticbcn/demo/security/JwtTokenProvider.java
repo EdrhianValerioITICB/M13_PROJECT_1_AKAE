@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import cat.iticbcn.demo.bean.UserEntity;
+
 import java.util.Date;
 
 /*
