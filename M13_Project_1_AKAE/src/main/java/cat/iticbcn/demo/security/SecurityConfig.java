@@ -1,7 +1,6 @@
 package cat.iticbcn.demo.security;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,38 +19,40 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 @Configuration
-public class SecurityConfig{
-	
-	@Autowired
-	private JwtFilter jwtFilter;
-	@Bean
-	public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder, 
-			UserDetailsService userDetaisService) throws Exception {
-		
-		
-		return http.getSharedObject(AuthenticationManagerBuilder.class)
-				.userDetailsService(userDetaisService)
-				.passwordEncoder(passwordEncoder)
-				.and()
-				.build();
-				
-	}
-	
-	@Bean 
-	
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		
-		http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		
-		http.authorizeHttpRequests()
-		.requestMatchers("/auth/**").permitAll()
-		.anyRequest()
-		.authenticated();
-		
-		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-		
-		return http.build();
-	}
+public class SecurityConfig {
+
+    @Autowired
+    private JwtFilter jwtFilter;
+
+    @Bean
+    public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder,
+                                             UserDetailsService userDetaisService) throws Exception {
+
+
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetaisService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
+
+    }
+
+    @Bean
+
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.authorizeHttpRequests()
+                .requestMatchers("/auth/**").permitAll()
+                .anyRequest()
+                .authenticated();
+
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
 	/*@Bean	
 	public UserDetailsService userDetailsService() {
 		
