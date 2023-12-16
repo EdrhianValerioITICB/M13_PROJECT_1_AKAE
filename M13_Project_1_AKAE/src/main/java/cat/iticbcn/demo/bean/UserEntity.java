@@ -1,7 +1,9 @@
 package cat.iticbcn.demo.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,8 +12,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Entity
 public class UserEntity implements UserDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
@@ -21,20 +26,26 @@ public class UserEntity implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
-    @JoinColumn(name="offer_id",nullable=false)
-    private List<Offer> offers = new ArrayList<>();
-
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<UserAuthority> authorities = new ArrayList<>();
 
+    public UserEntity() {
+    }
 
+    public UserEntity(Long id, String username, String password, String email, List<UserAuthority> authorities) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.authorities = authorities;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.toString())).toList();
+        return this.authorities.stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.toString()))
+                .toList();
     }
 
     @Override
@@ -75,3 +86,4 @@ public class UserEntity implements UserDetails {
         return email;
     }
 }
+
