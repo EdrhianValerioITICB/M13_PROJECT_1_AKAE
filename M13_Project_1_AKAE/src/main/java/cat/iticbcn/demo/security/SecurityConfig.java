@@ -26,19 +26,17 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder,
-                                             UserDetailsService userDetaisService) throws Exception {
+                                             UserDetailsService userDetailsService) throws Exception {
 
 
         return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetaisService)
+                .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder)
-                .and()
-                .build();
+                .and().build();
 
     }
 
     @Bean
-
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
