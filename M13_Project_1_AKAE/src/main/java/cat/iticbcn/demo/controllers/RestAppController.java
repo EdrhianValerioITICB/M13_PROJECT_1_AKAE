@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,31 +21,20 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import cat.iticbcn.demo.Exception.CompanyAndOfferNotConnectedException;
 import cat.iticbcn.demo.Exception.CompanyNotFoundException;
 import cat.iticbcn.demo.Exception.OfferNotFoundException;
 import cat.iticbcn.demo.bean.Company;
 import cat.iticbcn.demo.bean.Offer;
-import cat.iticbcn.demo.repository.CompanyRepository;
-import cat.iticbcn.demo.repository.OfferRepository;
 
 @RestController
 @Tag(name = "Controller", description = "Companies and Offer API REST with CRUD Operations")
 public class RestAppController {
 
-	@Autowired
-	private final OfferRepository offerRepository;
-
-	@Autowired
-	private final CompanyRepository companyRepository;
-
 	private final CompanyService companyService;
 
 	private final OfferService offerService;
 
-	public RestAppController(OfferRepository offerRepository, CompanyRepository companyRepository , CompanyService companyService, OfferService offerService) {
-		this.offerRepository = offerRepository;
-		this.companyRepository = companyRepository;
+	public RestAppController(CompanyService companyService, OfferService offerService) {
 		this.companyService = companyService;
 		this.offerService = offerService;
 	}
@@ -62,7 +50,7 @@ public class RestAppController {
 	})
 	@Operation(summary = "Find all Companies", description = "Retieves all Companies from database")
 	@GetMapping("/companies")
-	List<Company> allCompanies() {
+	List<Company> findAllCompanies() {
 		return companyService.findAll();
 	}
 
@@ -76,7 +64,7 @@ public class RestAppController {
 	})
 	@Operation(summary = "Add a Company", description = "Adds a Company in the database")
 	@PostMapping("/companies")
-	Company newCompany(@RequestBody Company newCompany) {
+	Company createNewCompany(@RequestBody Company newCompany) {
 		return companyService.save(newCompany);
 	}
 
@@ -89,7 +77,7 @@ public class RestAppController {
 	})
 	@Operation(summary = "Find a Company", description = "Find a Company by it's id")
 	@GetMapping("/companies/{id}")
-	Company oneCompany(@PathVariable Long id) {
+	Company findOneCompany(@PathVariable Long id) {
 		return companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
 	}
 
@@ -118,8 +106,8 @@ public class RestAppController {
 	@DeleteMapping("/companies/{id}")
 	void deleteCompany(@PathVariable Long id) {
 		companyService.deleteById(id);
-		Optional<Company> company = Optional.ofNullable(companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id)));;
-		companyRepository.deleteById(id);
+		Optional<Company> company = Optional.ofNullable(companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id)));;
+		companyService.deleteById(id);
 	}
 
 	// OFFER METHODS----------------------------------------------
@@ -132,7 +120,7 @@ public class RestAppController {
 	})
 	@Operation(summary = "Find all Offers", description = "Retieves all Offers from the database")
 	@GetMapping("/offers")
-	List<Offer> allOffers() {
+	List<Offer> findAllOffers() {
 		return offerService.getAllOffers();
 	}
 
@@ -145,8 +133,8 @@ public class RestAppController {
 	})
 	@Operation(summary = "Find an Offer", description = "Retieves an Offer from the database")
 	@GetMapping("/offers/{id}")
-	Offer oneOffer(@PathVariable Long id) {
-		return offerService.getOneOffer(id);
+	Offer findOneOffer(@PathVariable Long id) {
+		return offerService.findById(id).orElseThrow(() -> new OfferNotFoundException(id));
 	}
 
 	//GET OFFER BY COMPANY ID
@@ -158,7 +146,7 @@ public class RestAppController {
 	})
 	@Operation(summary = "Find all Offers of a Company", description = "Retrieves all Offers of a Company by it's id")
 	@GetMapping(value = "companies/{id}/offers")
-	List<Offer> getOffer(@PathVariable("id") Long id) {
+	List<Offer> findAllOffersByCompany(@PathVariable("id") Long id) {
 		return offerService.getOffersByCompanyId(id);
 	}
 
@@ -171,7 +159,7 @@ public class RestAppController {
 	})
 	@Operation(summary = "Find and Offer", description = "Retrieves an Offer by it's id and from a specific Company by it's id")
 	@GetMapping(value = "companies/{idCo}/offers/{idOf}")
-	Optional<Offer> getOfferByCompany(@PathVariable("idCo") Long idCo, @PathVariable("idOf") Long idOf){
+	Optional<Offer> findOneOfferByCompany(@PathVariable("idCo") Long idCo, @PathVariable("idOf") Long idOf){
 		return offerService.getOfferByCompany(idCo, idOf);
 	}
 
