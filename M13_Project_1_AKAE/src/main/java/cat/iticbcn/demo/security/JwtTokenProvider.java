@@ -32,7 +32,7 @@ public class JwtTokenProvider {
 
     public String generateToken(Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
-
+        System.out.println(System.currentTimeMillis());
         return Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
                 .setHeaderParam("typ", "JWT")
