@@ -25,6 +25,7 @@ public class UserEntityService {
     }
 
     public UserEntity save(UserRegisterDTO userDTO) {
+
         UserEntity user = new UserEntity(
                 null,
                 userDTO.username(),
@@ -32,6 +33,7 @@ public class UserEntityService {
                 userDTO.email(),
                 List.of(UserAuthority.READ)
         );
+
         return user;
     }
 }
