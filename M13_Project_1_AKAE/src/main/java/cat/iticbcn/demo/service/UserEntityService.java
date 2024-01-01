@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public class UserEntityService {
+
     private final UserEntityRepository repository;
     private final PasswordEncoder passwordEncoder;
 
@@ -20,12 +21,11 @@ public class UserEntityService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<UserEntity> findByUserName(String username) {
+    public Optional<UserEntity> findByUsername(String username) {
         return this.repository.findByUsername(username);
     }
 
     public UserEntity save(UserRegisterDTO userDTO) {
-
         UserEntity user = new UserEntity(
                 null,
                 userDTO.username(),
@@ -33,7 +33,7 @@ public class UserEntityService {
                 userDTO.email(),
                 List.of(UserAuthority.READ)
         );
-
-        return user;
+        return this.repository.save(user);
     }
+
 }
