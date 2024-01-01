@@ -1,6 +1,6 @@
 package cat.iticbcn.demo.security;
 
-
+import cat.iticbcn.demo.bean.UserEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -11,12 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import cat.iticbcn.demo.bean.UserEntity;
-
 import java.util.Date;
 
 /*
-Responsible for generating JWT tokens when a user successfully logs in
+Se encarga de generar tokens JWT cuando un usuario inicia sesión satisfactoriamente
  */
 @Component
 public class JwtTokenProvider {
@@ -32,7 +30,7 @@ public class JwtTokenProvider {
 
     public String generateToken(Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
-        System.out.println(System.currentTimeMillis());
+
         return Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
                 .setHeaderParam("typ", "JWT")
@@ -57,11 +55,11 @@ public class JwtTokenProvider {
             validator.parseClaimsJws(token);
             return true;
         } catch (SignatureException e) {
-            log.info("Error in the signature of the token", e);
+            log.info("Error en la firma del token", e);
         } catch (MalformedJwtException | UnsupportedJwtException e) {
-            log.info("Token incorrect", e);
+            log.info("Token incorrecto", e);
         } catch (ExpiredJwtException e) {
-            log.info("Token expired", e);
+            log.info("Token expirado", e);
         }
         return false;
 
@@ -76,4 +74,3 @@ public class JwtTokenProvider {
         return claims.get("username").toString();
     }
 }
-

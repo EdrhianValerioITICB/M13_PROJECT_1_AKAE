@@ -1,5 +1,8 @@
 package cat.iticbcn.demo.security;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * Extracts the JWT token from the Authorization header of the HTTP request.
+ * Extrae el token JWT de la cabecera Authorization de la petición HTTP.
  */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -27,11 +30,11 @@ public class JwtFilter extends OncePerRequestFilter {
     private UserDetailsService userService;
 
     @Override
-    protected void doFilterInternal(jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response, jakarta.servlet.FilterChain filterChain) throws jakarta.servlet.ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String token = this.extractToken((HttpServletRequest) request);
+        String token = this.extractToken(request);
 
-        if (this.tokenProvider.isValidToken(token)) {
+        if(this.tokenProvider.isValidToken(token)){
 
             String username = this.tokenProvider.getUsernameFromToken(token);
             UserDetails user = this.userService.loadUserByUsername(username);
@@ -45,16 +48,13 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
-
     }
 
-    private String extractToken(HttpServletRequest request) {
+    private String extractToken(HttpServletRequest request){
         String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasLength(bearerToken) && bearerToken.startsWith("Bearer")) {
+        if (StringUtils.hasLength(bearerToken) && bearerToken.startsWith("Bearer")){
             return bearerToken.substring("Bearer ".length());
         }
         return null;
     }
-
 }
-
