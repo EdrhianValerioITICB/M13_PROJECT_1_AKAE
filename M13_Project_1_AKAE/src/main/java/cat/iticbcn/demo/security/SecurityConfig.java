@@ -1,7 +1,9 @@
 package cat.iticbcn.demo.security;
+import cat.iticbcn.demo.bean.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,10 +38,33 @@ public class SecurityConfig {
 
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        RequestMatcher requestMatcher = new AntPathRequestMatcher("/auth/**");
-        RequestMatcher requestMatcherTwo = new AntPathRequestMatcher("/swagger-ui/**");
+        RequestMatcher rqstAuthoritation = new AntPathRequestMatcher("/auth/**");
 
-        http.authorizeRequests().requestMatchers(requestMatcher).permitAll();
+        RequestMatcher getOffers = new AntPathRequestMatcher("/offers/**", HttpMethod.GET.name());
+        RequestMatcher postOffers = new AntPathRequestMatcher("/offers/**", HttpMethod.POST.name());
+        RequestMatcher putOffers = new AntPathRequestMatcher("/offers/**", HttpMethod.PUT.name());
+        RequestMatcher deleteOffers = new AntPathRequestMatcher("/offers/**", HttpMethod.DELETE.name());
+
+        RequestMatcher getCompanies = new AntPathRequestMatcher("/companies/**", HttpMethod.GET.name());
+        RequestMatcher postCompanies = new AntPathRequestMatcher("/companies/**", HttpMethod.POST.name());
+        RequestMatcher putCompanies = new AntPathRequestMatcher("/companies/**", HttpMethod.PUT.name());
+        RequestMatcher deleteCompanies = new AntPathRequestMatcher("/companies/**", HttpMethod.DELETE.name());
+
+        RequestMatcher studentRequests = new AntPathRequestMatcher("/student/**");
+
+        http.authorizeRequests().requestMatchers(rqstAuthoritation).permitAll();
+
+        http.authorizeRequests().requestMatchers(getOffers).hasAuthority(UserAuthority.READ.toString());
+        http.authorizeRequests().requestMatchers(postOffers).hasAuthority(UserAuthority.WRITE.name());
+        http.authorizeRequests().requestMatchers(putOffers).hasAuthority(UserAuthority.WRITE.name());
+        http.authorizeRequests().requestMatchers(deleteOffers).hasAuthority(UserAuthority.WRITE.name());
+
+        http.authorizeRequests().requestMatchers(getCompanies).hasAuthority(UserAuthority.READ.toString());
+        http.authorizeRequests().requestMatchers(postCompanies).hasAuthority(UserAuthority.WRITE.name());
+        http.authorizeRequests().requestMatchers(putCompanies).hasAuthority(UserAuthority.WRITE.name());
+        http.authorizeRequests().requestMatchers(deleteCompanies).hasAuthority(UserAuthority.WRITE.name());
+
+        http.authorizeRequests().requestMatchers(studentRequests).hasAuthority(UserAuthority.READ.name());
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
