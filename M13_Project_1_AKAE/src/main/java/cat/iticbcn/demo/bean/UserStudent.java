@@ -1,9 +1,6 @@
 package cat.iticbcn.demo.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class UserEntity implements UserDetails {
+public class UserStudent implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,15 +27,24 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private List<UserAuthority> authorities = new ArrayList<>();
 
-    public UserEntity() {
+    @ManyToMany
+    @JoinTable(
+            name = "student_offers",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "offer_id")
+    )
+    private List<Offer> offers;
+
+    public UserStudent() {
     }
 
-    public UserEntity(Long id, String username, String password, String email, List<UserAuthority> authorities) {
+    public UserStudent(Long id, String username, String password, String email, List<UserAuthority> authorities, List<Offer> offers) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.authorities = authorities;
+        this.offers = offers;
     }
 
     @Override
@@ -85,5 +91,10 @@ public class UserEntity implements UserDetails {
     public String getEmail() {
         return email;
     }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
 }
 

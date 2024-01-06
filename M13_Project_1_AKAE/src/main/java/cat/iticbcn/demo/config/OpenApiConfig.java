@@ -13,7 +13,7 @@ http://localhost:8080/swagger-ui/index.html
 @Configuration
 public class OpenApiConfig {
     @Bean
-    public OpenAPI openAp(){
+    public OpenAPI openApi(){
         return new OpenAPI()
                 .info(new Info()
                     .title("Companies and Offers API")

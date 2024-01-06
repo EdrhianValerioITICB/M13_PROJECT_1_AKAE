@@ -26,19 +26,16 @@ public class Offer {
 	@JoinColumn(name="company_id",nullable=false)
 	private Company company;
 
-	@JoinTable(
-			name = "rel_offers_users",
-			joinColumns = @JoinColumn(name = "fk_offer", nullable = false),
-			inverseJoinColumns = @JoinColumn(name="fk_user", nullable = false)
-	)
-	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Offer> offers;
+	@ManyToMany(mappedBy = "offers")
+	@JsonIgnore
+	private List<UserStudent> students;
 
-	public Offer(Long id, String title, String description, Company company) {
+	public Offer(Long id, String title, String description, Company company, List<UserStudent> students) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.company = company;
+		this.students = students;
 	}
 
 	public Offer() {}
@@ -73,6 +70,14 @@ public class Offer {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public List<UserStudent> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<UserStudent> students) {
+		this.students = students;
 	}
 
 	@Override

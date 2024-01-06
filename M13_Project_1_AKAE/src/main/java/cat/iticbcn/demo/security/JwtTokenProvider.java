@@ -1,6 +1,7 @@
 package cat.iticbcn.demo.security;
 
-import cat.iticbcn.demo.bean.UserEntity;
+import cat.iticbcn.demo.bean.UserAdministrator;
+import cat.iticbcn.demo.bean.UserStudent;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -28,8 +29,23 @@ public class JwtTokenProvider {
     @Value("${app.security.jwt.expiration}")
     private Long jwtDurationSeconds;
 
-    public String generateToken(Authentication authentication) {
-        UserEntity user = (UserEntity) authentication.getPrincipal();
+    public String generateTokenStudent(Authentication authentication) {
+        UserStudent user = (UserStudent) authentication.getPrincipal();
+
+        return Jwts.builder()
+                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
+                .setHeaderParam("typ", "JWT")
+                .setSubject(Long.toString(user.getId()))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + (jwtDurationSeconds * 1000)))
+                .claim("username", user.getUsername())
+                .claim("email", user.getEmail())
+                .compact();
+
+    }
+
+    public String generateTokenAdministrator(Authentication authentication) {
+        UserAdministrator user = (UserAdministrator) authentication.getPrincipal();
 
         return Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
