@@ -30,6 +30,13 @@ public class Offer {
 	@JsonIgnore
 	private List<UserStudent> students;
 
+	public Offer(Long id, String title, String description, Company company) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.company = company;
+	}
+
 	public Offer(Long id, String title, String description, Company company, List<UserStudent> students) {
 		this.id = id;
 		this.title = title;
