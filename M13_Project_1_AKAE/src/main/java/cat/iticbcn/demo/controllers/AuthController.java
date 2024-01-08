@@ -29,6 +29,11 @@ public class AuthController {
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;
 
+	public AuthController(UserStudentService userStudentService, UserAdministratorService userAdministratorService) {
+		this.userStudentService = userStudentService;
+		this.userAdministratorService = userAdministratorService;
+	}
+
 	@PostMapping("/auth/register/student")
 	public UserStudent saveStudent(@RequestBody UserRegisterDTO userDTO){
 		return this.userStudentService.save(userDTO);
