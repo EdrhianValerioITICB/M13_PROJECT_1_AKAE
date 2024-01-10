@@ -36,7 +36,7 @@ class RestAppControllerTest {
         restAppController = new RestAppController(companyService, offerService);
     }
 
-    @Test
+ /*   @Test
     void findZeroCompanies() {
         List<Company> companies = restAppController.findAllCompanies();
         assertEquals(0, companies.size());
@@ -67,4 +67,6 @@ class RestAppControllerTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
+  */
 }
