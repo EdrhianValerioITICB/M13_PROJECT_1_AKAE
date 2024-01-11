@@ -8,6 +8,7 @@ import cat.iticbcn.demo.bean.Offer;
 import cat.iticbcn.demo.repository.CompanyRepository;
 import cat.iticbcn.demo.repository.OfferRepository;
 import cat.iticbcn.demo.service.OfferServiceImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -90,7 +91,10 @@ class OfferServiceImplTest {
 
     @Test
     void getOfferByCompany() {
-        Company company = new Company(1L, "Company1", 100, "12345", "Owner1", "Address1", "123456789", "company1@example.com", "Type1", List.of(new Offer(1L, "Offer1", "Description", new Company())));
+        Company company = new Company(1L, "Company1", 100, "12345", "Owner1", "Address1", "123456789", "company1@example.com", "Type1", List.of());
+        Offer offer = new Offer(1L, "Offer1", "Description", company);
+        company = new Company(1L, "Company1", 100, "12345", "Owner1", "Address1", "123456789", "company1@example.com", "Type1", List.of(offer));
+
         when(companyRepository.findById(any())).thenReturn(Optional.of(company));
         when(offerRepository.findById(any())).thenReturn(Optional.of(new Offer(1L, "Offer1", "Description", company)));
 
@@ -138,10 +142,14 @@ class OfferServiceImplTest {
 
     @Test
     void deleteOffer() {
-        Company company = new Company(1L, "Company1", 100, "12345", "Owner1", "Address1", "123456789", "company1@example.com", "Type1", List.of(new Offer(1L, "Offer1", "Description", new Company())));
+        Company company = new Company(1L, "Company1", 100, "12345", "Owner1", "Address1", "123456789", "company1@example.com", "Type1", List.of());
+        Offer offer = new Offer(1L, "Offer1", "Description", company);
+        company = new Company(1L, "Company1", 100, "12345", "Owner1", "Address1", "123456789", "company1@example.com", "Type1", List.of(offer));
+
         when(companyRepository.findById(any())).thenReturn(Optional.of(company));
         when(offerRepository.findById(any())).thenReturn(Optional.of(new Offer(1L, "Offer1", "Description", company)));
 
+        //Assertions.assertDoesNotThrow(() -> offerService.deleteOffer(1L, 1L));
         assertDoesNotThrow(() -> offerService.deleteOffer(1L, 1L));
 
         verify(companyRepository, times(1)).findById(1L);
