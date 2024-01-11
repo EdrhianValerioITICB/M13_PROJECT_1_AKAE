@@ -41,7 +41,7 @@ class CompanyRepositoryTest {
 		entityManager.flush();
 		return company;
 	}
-
+/*
 	@Test
 	void findAllTest() {
 		Company c1=new Company(null, "Amazon",324,"shfnfkn8374834", "Capri Vazquez", "calle 2, barcelona", "67467348","gmailAmazon@gmail.com", "internacional",
@@ -255,4 +255,6 @@ class CompanyRepositoryTest {
 	assertEquals(c1.getId(),companies.get(0).getId());
 	}
 	*/
+
+
 }

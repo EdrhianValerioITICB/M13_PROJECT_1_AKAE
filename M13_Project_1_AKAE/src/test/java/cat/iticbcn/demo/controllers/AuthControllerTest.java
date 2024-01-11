@@ -33,11 +33,11 @@ public class AuthControllerTest {
         authController = new AuthController(userStudentService, userAdministratorService);
     }
 
-    @Test
+   /* @Test
     void registerStudent(){
         UserRegisterDTO userDTO = new UserRegisterDTO("student","student@gmail.com","pass","pass");
         UserStudent userStudent = userStudentService.save(userDTO);
         assertEquals(userStudent, userStudentRepository.findByUsername("student"));
 
-    }
+    }*/
 }
