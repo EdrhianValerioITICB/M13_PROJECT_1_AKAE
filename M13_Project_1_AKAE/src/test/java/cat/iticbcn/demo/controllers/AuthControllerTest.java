@@ -9,11 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@SpringBootTest
 public class AuthControllerTest {
 
     AuthController authController;
@@ -36,8 +39,9 @@ public class AuthControllerTest {
    /* @Test
     void registerStudent(){
         UserRegisterDTO userDTO = new UserRegisterDTO("student","student@gmail.com","pass","pass");
-        UserStudent userStudent = userStudentService.save(userDTO);
-        assertEquals(userStudent, userStudentRepository.findByUsername("student"));
+        UserStudent userStudent = authController.saveStudent(userDTO);
+
+        assertNotNull(userStudent);
 
     }*/
 }
