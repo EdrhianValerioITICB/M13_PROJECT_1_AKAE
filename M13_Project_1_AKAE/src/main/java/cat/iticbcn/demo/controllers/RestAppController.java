@@ -88,7 +88,6 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
 			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
-
 	@Operation(summary = "Modify a Company", description = "Modifies a Company from the database")
 	@PutMapping("/companies/{id}")
 	Company replaceCompany(@RequestBody Company newCompany, @PathVariable Long id) {
@@ -105,7 +104,6 @@ public class RestAppController {
 	@Operation(summary = "Delete a Company", description = "Deletes a Company by it's id")
 	@DeleteMapping("/companies/{id}")
 	void deleteCompany(@PathVariable Long id) {
-		companyService.deleteById(id);
 		Optional<Company> company = Optional.ofNullable(companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id)));;
 		companyService.deleteById(id);
 	}
