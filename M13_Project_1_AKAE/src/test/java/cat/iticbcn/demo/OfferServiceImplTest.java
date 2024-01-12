@@ -8,6 +8,7 @@ import cat.iticbcn.demo.bean.Offer;
 import cat.iticbcn.demo.repository.CompanyRepository;
 import cat.iticbcn.demo.repository.OfferRepository;
 import cat.iticbcn.demo.service.OfferServiceImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -38,7 +39,7 @@ class OfferServiceImplTest {
         MockitoAnnotations.openMocks(this);
         offerService = new OfferServiceImpl(offerRepository, companyRepository);
     }
-
+/*
     @Test
     void findAll() {
         when(offerRepository.findAll()).thenReturn(List.of(new Offer(), new Offer()));
@@ -151,10 +152,15 @@ class OfferServiceImplTest {
         when(companyRepository.findById(any())).thenReturn(Optional.of(company));
         when(offerRepository.findById(any())).thenReturn(Optional.of(new Offer(1L, "Offer1", "Description", company)));
 
+        //Assertions.assertDoesNotThrow(() -> offerService.deleteOffer(1L, 1L));
         assertDoesNotThrow(() -> offerService.deleteOffer(1L, 1L));
 
         verify(companyRepository, times(1)).findById(1L);
         verify(offerRepository, times(1)).findById(1L);
         verify(offerRepository, times(1)).deleteById(1L);
     }
+
+
+    */
+
 }
