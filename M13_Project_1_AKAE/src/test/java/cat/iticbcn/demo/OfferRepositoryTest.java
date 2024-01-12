@@ -26,7 +26,7 @@ public class OfferRepositoryTest {
     private TestEntityManager entityManager;
     @Autowired
     private OfferRepository repoOff;
-//	@Autowired 
+//	@Autowired
 //	private Company company = new Company("Starbucks", 35, "u49304833o4", "Starbucks United", "carrer diagonal,33", "3892833402","starbucksDiag@gmail.com","pequeña", new ArrayList<>());
 //	@Autowired
 //	private CompanyRepository repoCo;
@@ -53,7 +53,7 @@ public class OfferRepositoryTest {
 
 
     @Test
-    @Sql("offers.sql")
+    //@Sql("offers.sql")
     void findAllWithSql() {
         List<Offer> offers = repoOff.findAll();
         assertEquals(10, offers.size());
