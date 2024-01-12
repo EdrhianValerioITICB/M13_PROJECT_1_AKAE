@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,6 +149,9 @@ class OfferServiceImplTest {
         Company company = new Company(1L, "Company1", 100, "12345", "Owner1", "Address1", "123456789", "company1@example.com", "Type1", List.of());
         Offer offer = new Offer(1L, "Offer1", "Description", company);
         company = new Company(1L, "Company1", 100, "12345", "Owner1", "Address1", "123456789", "company1@example.com", "Type1", List.of(offer));
+        List<Offer> offers = new ArrayList<>();
+        offers.add(offer);
+        company.setOffers(offers);
 
         when(companyRepository.findById(any())).thenReturn(Optional.of(company));
         when(offerRepository.findById(any())).thenReturn(Optional.of(new Offer(1L, "Offer1", "Description", company)));
