@@ -1,4 +1,4 @@
-package cat.iticbcn.demo;
+package cat.iticbcn.demo.service;
 
 import cat.iticbcn.demo.Exception.CompanyAndOfferNotConnectedException;
 import cat.iticbcn.demo.Exception.CompanyNotFoundException;
