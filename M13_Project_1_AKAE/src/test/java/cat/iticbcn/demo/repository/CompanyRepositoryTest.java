@@ -1,4 +1,4 @@
-package cat.iticbcn.demo;
+package cat.iticbcn.demo.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

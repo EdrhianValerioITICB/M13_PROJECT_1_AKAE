@@ -1,4 +1,4 @@
-package cat.iticbcn.demo;
+package cat.iticbcn.demo.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,10 +30,10 @@ public class OfferRepositoryTest {
 //	private Company company = new Company("Starbucks", 35, "u49304833o4", "Starbucks United", "carrer diagonal,33", "3892833402","starbucksDiag@gmail.com","pequeña", new ArrayList<>());
 //	@Autowired
 //	private CompanyRepository repoCo;
-/*
+
 
     @Test
-        //@Sql("offers.sql")
+    //@Sql("offers.sql")
     void findById() {
 
         Company c1 = new Company(null, "Amazon", 324, "shfnfkn8374834", "Capri Vazquez", "calle 2, barcelona", "67467348", "gmailAmazon@gmail.com", "internacional",
@@ -59,6 +59,6 @@ public class OfferRepositoryTest {
         assertEquals(10, offers.size());
     }
 
-    */
+
 
 }
