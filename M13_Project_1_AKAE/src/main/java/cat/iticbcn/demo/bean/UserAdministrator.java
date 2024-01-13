@@ -1,5 +1,6 @@
 package cat.iticbcn.demo.bean;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,13 +14,14 @@ import java.util.List;
 public class UserAdministrator implements UserDetails {
 
     @Id
+    @Schema(example = "3", description = "UserAdministrator numerical identifier, primary key")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Schema(example = "PaulAdministrator", description = "Name of the user")
     private String username;
-
+    @Schema(example = "STR0NGP4SSW0RDF0R4DMIN", description = "Password of the user")
     private String password;
-
+    @Schema(example = "PaulAdministrator@gmail.com", description = "User's email, unique")
     @Column(unique = true)
     private String email;
 
