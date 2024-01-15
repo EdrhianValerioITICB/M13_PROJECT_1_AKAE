@@ -81,6 +81,18 @@ public class RestAppController {
 		return companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
 	}
 
+	//GET RANGE OF EMPLOYEES OF A COMPANY
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Retrieved Company", content ={
+					@Content(mediaType = "application/json",
+							array = @ArraySchema(schema = @Schema(implementation = Company.class)))})
+	})
+	@Operation(summary = "Find a Company", description = "Find a Company by it's employees")
+	@GetMapping("/companies/employees/{minEmployees}-{maxEmployees}")
+	List<Company> findCompaniesByEmployeesRange(@PathVariable int minEmployees , @PathVariable int maxEmployees) {
+		return companyService.findCompaniesByEmployeesRange(minEmployees,maxEmployees);
+	}
+
 	//REPLACE COMPANY
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Modified Company", content ={
@@ -104,7 +116,7 @@ public class RestAppController {
 	@Operation(summary = "Delete a Company", description = "Deletes a Company by it's id")
 	@DeleteMapping("/companies/{id}")
 	void deleteCompany(@PathVariable Long id) {
-		Optional<Company> company = Optional.ofNullable(companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id)));;
+		Optional<Company> company = Optional.ofNullable(companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id)));
 		companyService.deleteById(id);
 	}
 
