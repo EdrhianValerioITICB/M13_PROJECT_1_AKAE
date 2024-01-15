@@ -40,7 +40,7 @@ class OfferServiceImplTest {
         MockitoAnnotations.openMocks(this);
         offerService = new OfferServiceImpl(offerRepository, companyRepository);
     }
-/*
+
     @Test
     void findAll() {
         when(offerRepository.findAll()).thenReturn(List.of(new Offer(), new Offer()));
@@ -163,8 +163,5 @@ class OfferServiceImplTest {
         verify(offerRepository, times(1)).findById(1L);
         verify(offerRepository, times(1)).deleteById(1L);
     }
-
-
-    */
 
 }

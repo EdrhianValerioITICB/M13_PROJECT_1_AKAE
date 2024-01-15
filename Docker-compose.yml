@@ -11,8 +11,8 @@ services:
       - 5432:5432
   
   backend:
-    image: edrhianvalerioandres/springbootapp:1.0
-    container_name: spring-backend
+    image: edrhianvalerioandres/akaeproject:1.0-v-postgres
+    container_name: akae-spring-backend
     ports:
       - 8080:8080
     depends_on:
