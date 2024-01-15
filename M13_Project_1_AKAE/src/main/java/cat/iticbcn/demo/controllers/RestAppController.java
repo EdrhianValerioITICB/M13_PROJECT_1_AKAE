@@ -75,7 +75,7 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
 			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
-	@Operation(summary = "Find a Company", description = "Find a Company by it's id")
+	@Operation(summary = "Find a Company by id", description = "Find a Company by it's id")
 	@GetMapping("/companies/{id}")
 	Company findOneCompany(@PathVariable Long id) {
 		return companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
@@ -99,7 +99,7 @@ public class RestAppController {
 					@Content(mediaType = "application/json",
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))})
 	})
-	@Operation(summary = "Find a Company", description = "Find a Company by it's employees")
+	@Operation(summary = "Find companies with a number of employees", description = "Find a Company by a range of employees")
 	@GetMapping("/companies/employees/{minEmployees}-{maxEmployees}")
 	List<Company> findCompaniesByEmployeesRange(@PathVariable int minEmployees , @PathVariable int maxEmployees) {
 		return companyService.findCompaniesByEmployeesRange(minEmployees,maxEmployees);
@@ -179,7 +179,7 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
 			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
-	@Operation(summary = "Find and Offer", description = "Retrieves an Offer by it's id and from a specific Company by it's id")
+	@Operation(summary = "Find an Offer", description = "Retrieves an Offer by it's id and from a specific Company by it's id")
 	@GetMapping(value = "companies/{idCo}/offers/{idOf}")
 	Optional<Offer> findOneOfferByCompany(@PathVariable("idCo") Long idCo, @PathVariable("idOf") Long idOf){
 		return offerService.getOfferByCompany(idCo, idOf);
