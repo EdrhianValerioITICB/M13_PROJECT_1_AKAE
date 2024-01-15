@@ -11,7 +11,7 @@
     </parent>
     <groupId>cat.iticbcn</groupId>
     <artifactId>m13-project-1-akae</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>M13_Project_1_AKAE</name>
     <description>Project 1 M13</description>
     <properties>

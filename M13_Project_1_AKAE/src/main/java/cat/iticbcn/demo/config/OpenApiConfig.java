@@ -20,6 +20,7 @@ public class OpenApiConfig {
                 .bearerFormat("JWT")
                 .scheme("bearer");
     }
+
     @Bean
     public OpenAPI openApi(){
         return new OpenAPI()
