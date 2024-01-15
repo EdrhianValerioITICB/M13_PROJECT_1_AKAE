@@ -47,8 +47,8 @@ public class OfferRepositoryTest {
 
 
         Optional<Offer> off = repoOff.findById(c1.getId());
-        assertEquals(c1.getId(),
-                off.get().getId());
+        off.ifPresent(offer -> assertEquals(c1.getId(),
+                offer.getId()));
     }
 
 

@@ -81,6 +81,18 @@ public class RestAppController {
 		return companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
 	}
 
+	//GET COMPANY BY NAME
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Retrieved Company", content ={
+					@Content(mediaType = "application/json",
+							array = @ArraySchema(schema = @Schema(implementation = Company.class)))})
+	})
+	@Operation(summary = "Find a Company by name", description = "Find a Company by it's name")
+	@GetMapping("/companies/employees/{companyName}")
+	List<Company> findCompaniesByEmployeesRange(@PathVariable String companyName) {
+		return companyService.findCompaniesByName(companyName);
+	}
+
 	//GET RANGE OF EMPLOYEES OF A COMPANY
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Retrieved Company", content ={
