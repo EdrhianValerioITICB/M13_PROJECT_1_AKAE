@@ -26,10 +26,10 @@ public class OpenApiConfig {
                 .info(new Info()
                     .title("Companies and Offers API")
                     .description("API REST for empresas and ofertas")
-                    .version("v0.0.1"))
+                    .version("v1.0"))
                 .externalDocs(new ExternalDocumentation()
                     .description("Wiki Docs")
-                    .url("https://www.example.com/"))
+                    .url("https://docs.google.com/document/d/1YHvVxWqlVoRih3LsASv2kwBH9hnKclb6ucgNYGxE54Y/edit?usp=sharing"))
                 .addSecurityItem(new SecurityRequirement().
                         addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes

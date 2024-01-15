@@ -1,5 +1,6 @@
 package cat.iticbcn.demo.bean;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,12 +15,16 @@ public class UserStudent implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(example = "3", description = "UserStudent numerical identifier, primary key")
     private Long id;
 
+    @Schema(example = "Paul", description = "Name of the user")
     private String username;
 
+    @Schema(example = "STR0NGP4SSW0RD1234", description = "Password of the user")
     private String password;
 
+    @Schema(example = "Paul@gmail.com", description = "User's email, unique")
     @Column(unique = true)
     private String email;
 
@@ -27,6 +32,7 @@ public class UserStudent implements UserDetails {
     @Enumerated(EnumType.STRING)
     private List<UserAuthority> authorities = new ArrayList<>();
 
+    @Schema(description = "List of user's enrolled offers")
     @ManyToMany
     @JoinTable(
             name = "student_offers",

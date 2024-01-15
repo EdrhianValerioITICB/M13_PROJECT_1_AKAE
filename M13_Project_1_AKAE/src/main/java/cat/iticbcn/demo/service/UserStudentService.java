@@ -5,6 +5,7 @@ import cat.iticbcn.demo.bean.Offer;
 import cat.iticbcn.demo.bean.UserAuthority;
 import cat.iticbcn.demo.bean.UserStudent;
 import cat.iticbcn.demo.dto.UserRegisterDTO;
+import cat.iticbcn.demo.repository.OfferRepository;
 import cat.iticbcn.demo.repository.UserStudentRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,13 @@ public class UserStudentService {
 
     private final UserStudentRepository repository;
 
+    private final OfferRepository offerRepository;
     private final OfferService offerService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserStudentService(UserStudentRepository repository, OfferService offerService, PasswordEncoder passwordEncoder) {
+    public UserStudentService(UserStudentRepository repository, OfferRepository offerRepository, OfferService offerService, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.offerRepository = offerRepository;
         this.offerService = offerService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -47,17 +50,18 @@ public class UserStudentService {
         return this.repository.save(user);
     }
 
-    public Optional<Offer> enrollStudentInOffer(Optional<UserStudent> studentOptional, Long offerId) {
+    public void enrollStudentInOffer(Optional<UserStudent> studentOptional, Long offerId) {
         Optional<Offer> optionalOffer = offerService.findById(offerId);
-        if (optionalOffer.isPresent()) {
+        if (optionalOffer.isPresent() && studentOptional.isPresent()) {
             UserStudent student = studentOptional.get();
             Offer offer = optionalOffer.get();
 
             if (!student.getOffers().contains(offer)) {
                 student.getOffers().add(offer);
+                offer.getStudents().add(student);
+                offerRepository.save(offer);
                 repository.save(student);
             }
         }
-        return optionalOffer;
     }
 }

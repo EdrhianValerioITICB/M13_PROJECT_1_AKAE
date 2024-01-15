@@ -27,7 +27,7 @@ import cat.iticbcn.demo.bean.Company;
 import cat.iticbcn.demo.bean.Offer;
 
 @RestController
-@Tag(name = "Controller", description = "Companies and Offer API REST with CRUD Operations")
+@Tag(name = "Offer And Company Controller", description = "Companies and Offer Controller with CRUD Operations")
 public class RestAppController {
 
 	private final CompanyService companyService;
@@ -48,7 +48,7 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
 			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
-	@Operation(summary = "Find all Companies", description = "Retieves all Companies from database")
+	@Operation(summary = "Find all Companies", description = "Retrieves all Companies from database")
 	@GetMapping("/companies")
 	List<Company> findAllCompanies() {
 		return companyService.findAll();
@@ -116,7 +116,7 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
 			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
-	@Operation(summary = "Find all Offers", description = "Retieves all Offers from the database")
+	@Operation(summary = "Find all Offers", description = "Retrieves all Offers from the database")
 	@GetMapping("/offers")
 	List<Offer> findAllOffers() {
 		return offerService.getAllOffers();
@@ -129,7 +129,7 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
 			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
-	@Operation(summary = "Find an Offer", description = "Retieves an Offer from the database")
+	@Operation(summary = "Find an Offer", description = "Retrieves an Offer from the database")
 	@GetMapping("/offers/{id}")
 	Offer findOneOffer(@PathVariable Long id) {
 		return offerService.findById(id).orElseThrow(() -> new OfferNotFoundException(id));
