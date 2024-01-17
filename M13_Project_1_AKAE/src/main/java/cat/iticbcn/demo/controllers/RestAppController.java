@@ -100,7 +100,7 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))})
 	})
 	@Operation(summary = "Find companies with a number of employees", description = "Find a Company by a range of employees")
-	@GetMapping("/companies/employees/{minEmployees}-{maxEmployees}")
+	@GetMapping("/companies/employees/{minEmployees}/{maxEmployees}")
 	List<Company> findCompaniesByEmployeesRange(@PathVariable int minEmployees , @PathVariable int maxEmployees) {
 		return companyService.findCompaniesByEmployeesRange(minEmployees,maxEmployees);
 	}
