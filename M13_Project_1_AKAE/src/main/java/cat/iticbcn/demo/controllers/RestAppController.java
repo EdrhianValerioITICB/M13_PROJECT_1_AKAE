@@ -75,10 +75,10 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
 			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
-	@Operation(summary = "Find a Company by id", description = "Find a Company by it's id")
-	@GetMapping("/companies/{id}")
-	Company findOneCompany(@PathVariable Long id) {
-		return companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
+	@Operation(summary = "Find a Company by id", description = "Retrieves a Company by it's id from the database")
+	@GetMapping("/companies/{idCo}")
+	Company findOneCompany(@PathVariable Long idCo) {
+		return companyService.findById(idCo).orElseThrow(() -> new CompanyNotFoundException(idCo));
 	}
 
 	//GET COMPANY BY NAME
@@ -89,8 +89,8 @@ public class RestAppController {
 	})
 	@Operation(summary = "Find a Company by name", description = "Find a Company by it's name")
 	@GetMapping("/companies/employees/{companyName}")
-	List<Company> findCompaniesByEmployeesRange(@PathVariable String companyName) {
-		return companyService.findCompaniesByName(companyName);
+	Optional<Company> findCompaniesByEmployeesRange(@PathVariable String companyName) {
+		return companyService.findByName(companyName);
 	}
 
 	//GET RANGE OF EMPLOYEES OF A COMPANY
@@ -112,10 +112,10 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Company.class)))}),
 			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
-	@Operation(summary = "Modify a Company", description = "Modifies a Company from the database")
-	@PutMapping("/companies/{id}")
-	Company replaceCompany(@RequestBody Company newCompany, @PathVariable Long id) {
-		return companyService.replaceCompany(newCompany, id);
+	@Operation(summary = "Modify a Company", description = "Modifies an Company from the database by it's id")
+	@PutMapping("/companies/{idCo}")
+	Company replaceCompany(@RequestBody Company newCompany, @PathVariable Long idCo) {
+		return companyService.replaceCompany(newCompany, idCo);
 	}
 
 	//DELETE COMPANY
@@ -126,10 +126,10 @@ public class RestAppController {
 			@ApiResponse(responseCode = "404", description = "Company not found", content ={})
 	})
 	@Operation(summary = "Delete a Company", description = "Deletes a Company by it's id")
-	@DeleteMapping("/companies/{id}")
-	void deleteCompany(@PathVariable Long id) {
-		Optional<Company> company = Optional.ofNullable(companyService.findById(id).orElseThrow(() -> new CompanyNotFoundException(id)));
-		companyService.deleteById(id);
+	@DeleteMapping("/companies/{idCo}")
+	void deleteCompany(@PathVariable Long idCo) {
+		Optional<Company> company = Optional.ofNullable(companyService.findById(idCo).orElseThrow(() -> new CompanyNotFoundException(idCo)));
+		companyService.deleteById(idCo);
 	}
 
 	// OFFER METHODS----------------------------------------------
@@ -153,10 +153,10 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
 			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
-	@Operation(summary = "Find an Offer", description = "Retrieves an Offer from the database")
-	@GetMapping("/offers/{id}")
-	Offer findOneOffer(@PathVariable Long id) {
-		return offerService.findById(id).orElseThrow(() -> new OfferNotFoundException(id));
+	@Operation(summary = "Find an Offer", description = "Retrieves an Offer by it's id from the database")
+	@GetMapping("/offers/{idOf}")
+	Offer findOneOffer(@PathVariable Long idOf) {
+		return offerService.findById(idOf).orElseThrow(() -> new OfferNotFoundException(idOf));
 	}
 
 	//GET OFFER BY COMPANY ID
@@ -167,9 +167,9 @@ public class RestAppController {
 			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
 	@Operation(summary = "Find all Offers of a Company", description = "Retrieves all Offers of a Company by it's id")
-	@GetMapping(value = "companies/{id}/offers")
-	List<Offer> findAllOffersByCompany(@PathVariable("id") Long id) {
-		return offerService.getOffersByCompanyId(id);
+	@GetMapping(value = "companies/{idCo}/offers")
+	List<Offer> findAllOffersByCompany(@PathVariable("idCo") Long idCo) {
+		return offerService.getOffersByCompanyId(idCo);
 	}
 
 	//GET OFFER BY COMPANY
@@ -192,10 +192,10 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
 			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
-	@Operation(summary = "Create offer", description = "Adds a new Offer to the database")
-	@PostMapping(value = "companies/{id}/offers")
-	public ResponseEntity<Offer> createOfferCompany(@RequestBody Offer offer, @PathVariable("id") Long id) {
-		return offerService.createOfferForCompany(offer, id);
+	@Operation(summary = "Create offer", description = "Adds a new Offer to the company by it's id")
+	@PostMapping(value = "companies/{idCo}/offers")
+	public ResponseEntity<Offer> createOfferCompany(@RequestBody Offer offer, @PathVariable("idCo") Long idCo) {
+		return offerService.createOfferForCompany(offer, idCo);
 	}
 
 	//REPLACE OFFER
@@ -205,10 +205,10 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
 			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
-	@Operation(summary = "Modify Offer", description = "Modifies an Offer by it's id")
-	@PutMapping("/offers/{id}")
-	Offer replaceOffer(@RequestBody Offer newOffer, @PathVariable Long id) {
-		return offerService.updateOffer(id, newOffer);
+	@Operation(summary = "Modify Offer", description = "Modifies an Offer from the database by it's id")
+	@PutMapping("/offers/{idOf}")
+	Offer replaceOffer(@RequestBody Offer newOffer, @PathVariable Long idOf) {
+		return offerService.updateOffer(idOf, newOffer);
 	}
 
 	//DELETE OFFER
@@ -218,7 +218,7 @@ public class RestAppController {
 							array = @ArraySchema(schema = @Schema(implementation = Offer.class)))}),
 			@ApiResponse(responseCode = "404", description = "Offer not found", content ={})
 	})
-	@Operation(summary = "Delete Offer", description = "Deletes an Offer from the database")
+	@Operation(summary = "Delete Offer", description = "Deletes an Offer by it's id from a Company from the database")
 	@DeleteMapping("companies/{idCo}/offers/{idOf}")
 	@Transactional
 	public void deleteOffer(@PathVariable Long idCo, @PathVariable Long idOf) {

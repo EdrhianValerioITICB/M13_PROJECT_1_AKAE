@@ -45,8 +45,9 @@ public class AuthController {
 	}
 
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Student registered successfully")
-	})
+			@ApiResponse(responseCode = "200", description = "Student registered successfully", content ={
+					@Content(mediaType = "application/json",
+							array = @ArraySchema(schema = @Schema(implementation = UserRegisterDTO.class)))})})
 	@Operation(summary = "Register a Student", description = "Registers a UserStudent Entity")
 	@PostMapping("/auth/register/student")
 	public UserStudent saveStudent(@RequestBody UserRegisterDTO userDTO){
@@ -54,8 +55,9 @@ public class AuthController {
 	}
 
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Student login successfully")
-	})
+			@ApiResponse(responseCode = "200", description = "Student login successfully", content ={
+					@Content(mediaType = "application/json",
+							array = @ArraySchema(schema = @Schema(implementation = LoginRequest.class)))})})
 	@Operation(summary = "Login as a UserStudent", description = "Gives the token to authorize as a Student")
 	@PostMapping("/auth/login/student")
 	public LoginResponse loginStudent(@RequestBody LoginRequest loginDTO){
@@ -72,8 +74,9 @@ public class AuthController {
 	}
 
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Administrator registered successfully")
-	})
+			@ApiResponse(responseCode = "200", description = "Administrator registered successfully", content ={
+					@Content(mediaType = "application/json",
+							array = @ArraySchema(schema = @Schema(implementation = UserRegisterDTO.class)))})})
 	@Operation(summary = "Register a UserAdministrator", description = "Registers a UserAdministrator Entity")
 	@PostMapping("/auth/register/administrator")
 	public UserAdministrator saveAdministrator(@RequestBody UserRegisterDTO userDTO){
@@ -81,8 +84,9 @@ public class AuthController {
 	}
 
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Administrator login successfully")
-	})
+			@ApiResponse(responseCode = "200", description = "Administrator login successfully", content ={
+					@Content(mediaType = "application/json",
+							array = @ArraySchema(schema = @Schema(implementation = LoginRequest.class)))})})
 	@Operation(summary = "Login as a UserAdministrator", description = "Gives the token to authorize as a Administrator")
 	@PostMapping("/auth/login/administrator")
 	public LoginResponse loginAdministrator(@RequestBody LoginRequest loginDTO){

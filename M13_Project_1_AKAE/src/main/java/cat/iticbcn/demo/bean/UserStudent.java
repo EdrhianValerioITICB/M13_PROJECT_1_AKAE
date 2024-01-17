@@ -19,6 +19,7 @@ public class UserStudent implements UserDetails {
     private Long id;
 
     @Schema(example = "Paul", description = "Name of the user")
+    @Column(unique = true)
     private String username;
 
     @Schema(example = "STR0NGP4SSW0RD1234", description = "Password of the user")

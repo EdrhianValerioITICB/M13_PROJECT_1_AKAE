@@ -1,5 +1,6 @@
 package cat.iticbcn.demo.service;
 
+import cat.iticbcn.demo.Exception.CompanyNotFoundException;
 import cat.iticbcn.demo.bean.Company;
 import cat.iticbcn.demo.bean.Offer;
 import cat.iticbcn.demo.repository.CompanyRepository;
@@ -37,8 +38,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Optional<Company> findByName(String name) {
-        return Optional.ofNullable(this.companyRepository.findByName(name));
+    public Optional<Company> findByName(String name){
+        return Optional.ofNullable(this.companyRepository.findByName(name).orElseThrow(() -> new CompanyNotFoundException(name)));
     }
 
     @Override

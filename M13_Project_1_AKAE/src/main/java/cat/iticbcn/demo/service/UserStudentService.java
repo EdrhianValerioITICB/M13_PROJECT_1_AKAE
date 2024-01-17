@@ -38,7 +38,7 @@ public class UserStudentService {
         return this.repository.findByUsername(username);
     }
 
-    public UserStudent save(UserRegisterDTO userDTO) {
+    public UserStudent save(UserRegisterDTO userDTO){
         UserStudent user = new UserStudent(
                 null,
                 userDTO.username(),
