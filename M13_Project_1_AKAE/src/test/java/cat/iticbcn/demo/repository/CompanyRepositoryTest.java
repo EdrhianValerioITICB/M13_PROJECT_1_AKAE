@@ -123,8 +123,8 @@ class CompanyRepositoryTest {
                 new ArrayList<>());
         entityManager.persist(company);
         entityManager.flush();
-        Company compañiaBuscada = repository.findByName(company.getName());
-        assertEquals(company.getName(), compañiaBuscada.getName());
+        Optional<Company> compañiaBuscada = repository.findByName(company.getName());
+        assertEquals(company.getName(), compañiaBuscada.get().getName());
     }
 
     @Test

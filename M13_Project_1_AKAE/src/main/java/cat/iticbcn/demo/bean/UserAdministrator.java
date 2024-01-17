@@ -18,6 +18,7 @@ public class UserAdministrator implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Schema(example = "PaulAdministrator", description = "Name of the user")
+    @Column(unique = true)
     private String username;
     @Schema(example = "STR0NGP4SSW0RDF0R4DMIN", description = "Password of the user")
     private String password;

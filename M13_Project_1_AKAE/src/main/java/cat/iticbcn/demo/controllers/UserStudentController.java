@@ -39,7 +39,7 @@ public class UserStudentController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retrieved user offers")
     })
-    @Operation(summary = "Find all user offers", description = "Retrieves all offers from a logged user")
+    @Operation(summary = "Find all user offers", description = "Retrieves all offers from the current user")
     @GetMapping("/student/offers")
     List<Offer> findAllStudentOffers(){
 

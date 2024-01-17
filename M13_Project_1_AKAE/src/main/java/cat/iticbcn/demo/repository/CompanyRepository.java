@@ -31,7 +31,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
     List<Company> findBySocialSecurityNumber(String SSN);
 
-    Company findByName(String name);
+    Optional<Company> findByName(String name);
 
     // Finding companies based on the number of employees
     List<Company> findByEmployeesGreaterThan(int numberOfEmployees);
